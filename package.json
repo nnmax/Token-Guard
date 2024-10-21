@@ -7,8 +7,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
+    "lint": "eslint . --cache",
+    "lint:fix": "yarn eslint --fix",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -33,6 +33,6 @@
     "pre-commit": "yarn lint-staged"
   },
   "lint-staged": {
-    "*": "eslint --fix"
+    "*": "eslint --cache --fix --max-warnings 10"
   }
 }
