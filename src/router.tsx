@@ -1,10 +1,15 @@
 import { createBrowserRouter } from 'react-router-dom'
+import Providers from './components/Providers'
 import Home from './pages/Home'
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <Home />,
+    element: (
+      <Providers>
+        <Home />
+      </Providers>
+    ),
   },
 ])
 

@@ -1,8 +1,9 @@
-import type { NavigateOptions } from 'react-router-dom'
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import Providers from './components/Providers'
+import { type NavigateOptions, RouterProvider } from 'react-router-dom'
+import router from './router'
 import './index.css'
+import './i18n'
 
 declare module 'react-aria-components' {
   interface RouterConfig {
@@ -12,6 +13,6 @@ declare module 'react-aria-components' {
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <Providers />
+    <RouterProvider router={router} />
   </StrictMode>,
 )
