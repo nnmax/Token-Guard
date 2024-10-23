@@ -1,15 +1,24 @@
 import { createBrowserRouter } from 'react-router-dom'
-import Providers from './components/Providers'
+import Root from './components/Root'
 import Home from './pages/Home'
+import LegacyPage from './pages/Legacy'
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: (
-      <Providers>
-        <Home />
-      </Providers>
+      <Root />
     ),
+    children: [
+      {
+        index: true,
+        element: <Home />,
+      },
+      {
+        path: 'legacy',
+        element: <LegacyPage />,
+      },
+    ],
   },
 ])
 

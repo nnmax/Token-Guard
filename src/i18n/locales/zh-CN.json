@@ -1,3 +1,7 @@
 {
-  "Welcome to React": "欢迎使用 React 和 react-i18next"
+  "home": {
+    "legacy": "遗 产",
+    "pension": "社 保",
+    "trust": "信 托"
+  }
 }

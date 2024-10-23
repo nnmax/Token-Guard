@@ -1,3 +1,7 @@
 {
-  "Welcome to React": "Welcome to React and react-i18next"
+  "home": {
+    "legacy": "Legacy",
+    "pension": "Pension",
+    "trust": "Trust"
+  }
 }
