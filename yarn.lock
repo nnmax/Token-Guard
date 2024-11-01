@@ -678,6 +678,32 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@iconify/json@npm:^2.2.262":
+  version: 2.2.262
+  resolution: "@iconify/json@npm:2.2.262"
+  dependencies:
+    "@iconify/types": "npm:*"
+    pathe: "npm:^1.1.2"
+  checksum: 10c0/6764e4e78f9320f16e2697232a997e162637de52b84c4b2fbcf3616adf170afde8bd5a523ffb20493fd2b24269e4387df0b2a4c9882453caa79c07c14b4e4d9a
+  languageName: node
+  linkType: hard
+
+"@iconify/tailwind@npm:^1.1.3":
+  version: 1.1.3
+  resolution: "@iconify/tailwind@npm:1.1.3"
+  dependencies:
+    "@iconify/types": "npm:^2.0.0"
+  checksum: 10c0/045ea03328064c22dcd30855900a360a0637f4c33dfffd0b5ea23e7136602c6350f5c1bddf8ef74c42cc3fd56c061489c5f8944eda38f7149720c378140bb6f2
+  languageName: node
+  linkType: hard
+
+"@iconify/types@npm:*, @iconify/types@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "@iconify/types@npm:2.0.0"
+  checksum: 10c0/65a3be43500c7ccacf360e136d00e1717f050b7b91da644e94370256ac66f582d59212bdb30d00788aab4fc078262e91c95b805d1808d654b72f6d2072a7e4b2
+  languageName: node
+  linkType: hard
+
 "@internationalized/date@npm:^3.5.6":
   version: 3.5.6
   resolution: "@internationalized/date@npm:3.5.6"
@@ -3473,6 +3499,8 @@ __metadata:
   dependencies:
     "@antfu/eslint-config": "npm:^3.8.0"
     "@eslint-react/eslint-plugin": "npm:^1.15.0"
+    "@iconify/json": "npm:^2.2.262"
+    "@iconify/tailwind": "npm:^1.1.3"
     "@react-aria/optimize-locales-plugin": "npm:^1.1.2"
     "@types/eslint-plugin-tailwindcss": "npm:^3.17.0"
     "@types/react": "npm:^18.3.10"
@@ -3490,10 +3518,13 @@ __metadata:
     react: "npm:^18.3.1"
     react-aria-components: "npm:^1.4.1"
     react-dom: "npm:^18.3.1"
+    react-hook-form: "npm:^7.53.1"
     react-i18next: "npm:^15.1.0"
     react-router-dom: "npm:^6.27.0"
     simple-git-hooks: "npm:^2.11.1"
+    tailwind-merge: "npm:^2.5.4"
     tailwindcss: "npm:^3.4.14"
+    tailwindcss-animate: "npm:^1.0.7"
     typescript: "npm:^5.5.3"
     vite: "npm:^5.4.8"
   languageName: unknown
@@ -6560,6 +6591,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-hook-form@npm:^7.53.1":
+  version: 7.53.1
+  resolution: "react-hook-form@npm:7.53.1"
+  peerDependencies:
+    react: ^16.8.0 || ^17 || ^18 || ^19
+  checksum: 10c0/dd2466359a633f873755b366d367d51ab17100566b687fb3b098f704232bc6ab1c79d29f879151e492880ca5eeac35e9425fbe5a309e2a55f7a4b5baf7826e8d
+  languageName: node
+  linkType: hard
+
 "react-i18next@npm:^15.1.0":
   version: 15.1.0
   resolution: "react-i18next@npm:15.1.0"
@@ -7252,6 +7292,22 @@ __metadata:
     "@pkgr/core": "npm:^0.1.0"
     tslib: "npm:^2.6.2"
   checksum: 10c0/e0c262817444e5b872708adb6f5ad37951ba33f6b2d1d4477d45db1f57573a784618ceed5e6614e0225db330632b1f6b95bb74d21e4d013e45ad4bde03d0cb59
+  languageName: node
+  linkType: hard
+
+"tailwind-merge@npm:^2.5.4":
+  version: 2.5.4
+  resolution: "tailwind-merge@npm:2.5.4"
+  checksum: 10c0/6c3d2a1d44344f373859f005e6366f0dbd7f66131d330a51dbe823dab08f71c388b2efcbb2b6a2170ca469581d27079c25cd40c234ca1356c4893ae99c2febb3
+  languageName: node
+  linkType: hard
+
+"tailwindcss-animate@npm:^1.0.7":
+  version: 1.0.7
+  resolution: "tailwindcss-animate@npm:1.0.7"
+  peerDependencies:
+    tailwindcss: "*"
+  checksum: 10c0/ec7dbd1631076b97d66a1fbaaa06e0725fccfa63119221e8d87a997b02dcede98ad88bb1ef6665b968f5d260fcefb10592e0299ca70208d365b37761edf5e19a
   languageName: node
   linkType: hard
 

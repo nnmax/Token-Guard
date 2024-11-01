@@ -7,17 +7,17 @@ const cardClasses = clsx('flex h-[200px] w-full items-center justify-center roun
 
 export default function HomePage() {
   return (
-    <div className="mx-auto flex h-full w-[1440px] flex-col items-center px-40">
+    <div className="flex flex-col items-center px-40">
       <img src={LogoSvg} alt="Logo" className="mt-[114px]" />
       <h1 className="mt-[19px] text-6xl font-medium leading-[80px] text-[#6E86C2]">Crypto Safe</h1>
       <div className="mt-[91px] flex w-full justify-between gap-20">
-        <Link to="/" className={cardClasses}>
+        <Link to="/legacy" className={cardClasses}>
           {t('home.legacy')}
         </Link>
-        <Link to="/" className={cardClasses}>
+        <Link to="/pension" className={cardClasses}>
           {t('home.pension')}
         </Link>
-        <Link to="/" className={cardClasses}>
+        <Link to="/trust" className={cardClasses}>
           {t('home.trust')}
         </Link>
       </div>
