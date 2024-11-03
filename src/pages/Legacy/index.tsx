@@ -4,6 +4,7 @@ import { Button as AriaButton, Cell, Column, Form, Row, Table, TableBody, TableH
 import { Controller, useFieldArray, useForm } from 'react-hook-form'
 import { Trans } from 'react-i18next'
 import { Link } from 'react-router-dom'
+import { useAccount } from 'wagmi'
 import IncreaseSvg from '../../assets/images/increase.svg'
 import SearchSvg from '../../assets/images/search.svg'
 import ShieldSvg from '../../assets/images/shield.svg'
@@ -15,22 +16,18 @@ import Modal from '../../components/Modal'
 import NumberField from '../../components/NumberField'
 import TextField from '../../components/TextField'
 
-const connected = true
-
 export default function LegacyPage() {
+  const { isConnected } = useAccount()
+
   return (
     <div className="px-[68px] py-[90px]">
       <Link className="inline-flex items-center px-2 text-xs font-medium text-[#576FAA]" to="/">
         <span className="icon-[mingcute--left-line] text-[32px]"></span>
-        <span>
-          {t('legacy.home', {
-            defaultValue: 'Home',
-          })}
-        </span>
+        <span>Home</span>
       </Link>
       <div className="relative mt-2 px-28">
         <h1 className="text-center text-[32px] font-bold leading-10 text-[#576FAA]">{t('home.legacy')}</h1>
-        {connected && <ConnectedMenu className="absolute right-28 top-1" />}
+        {isConnected && <ConnectedMenu className="absolute right-28 top-1" />}
         <ul className="mt-10 flex flex-wrap gap-x-[49px] gap-y-4 text-sm/10 font-bold text-[#6E86C2]">
           <li className="h-10 flex-[327px] rounded-[5px] border border-dashed border-[#6E86C2] text-center">{t('legacy.desc1')}</li>
           <li className="h-10 flex-[327px] rounded-[5px] border border-dashed border-[#6E86C2] text-center">{t('legacy.desc2')}</li>
@@ -40,7 +37,7 @@ export default function LegacyPage() {
           <li className="h-10 flex-[327px] rounded-[5px] border border-dashed border-[#6E86C2] text-center">{t('legacy.desc6')}</li>
         </ul>
         {
-          connected
+          isConnected
             ? (
                 <>
                   <FormModal />
