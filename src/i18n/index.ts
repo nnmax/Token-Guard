@@ -13,6 +13,19 @@ export const resources = {
   },
 } as const
 
+function getDefaultLanguage() {
+  let defaultLanguage = 'en-US'
+  if (typeof window !== 'undefined') {
+    const lang = new URLSearchParams(window.location.search).get('lang')
+    if (lang && lang.startsWith('zh')) {
+      defaultLanguage = 'zh-CN'
+    }
+  }
+  return defaultLanguage
+}
+
+const defaultLanguage = getDefaultLanguage()
+
 export default i18n
   .use(initReactI18next) // passes i18n down to react-i18next
   .init({
@@ -20,8 +33,8 @@ export default i18n
     // (tip move them in a JSON file and import them,
     // or even better, manage them via a UI: https://react.i18next.com/guides/multiple-translation-files#manage-your-translations-with-a-management-gui)
     resources,
-    lng: 'en-US',
-    fallbackLng: 'en-US',
+    lng: defaultLanguage,
+    fallbackLng: defaultLanguage,
     defaultNS: DEFAULT_NS,
     debug: import.meta.env.DEV,
     interpolation: {

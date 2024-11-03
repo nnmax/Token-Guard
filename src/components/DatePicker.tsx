@@ -5,10 +5,11 @@ import { twMerge } from 'tailwind-merge'
 interface DatePickerProps extends AriaDatePickerProps<DateValue> {
   labelClasses?: string
   endAdditional?: React.ReactNode
+  label?: React.ReactNode
 }
 
 export default function DatePicker(props: DatePickerProps) {
-  const { labelClasses, endAdditional, ...restProps } = props
+  const { labelClasses, endAdditional, label, ...restProps } = props
 
   return (
     <div className="flex w-full gap-6">
@@ -22,8 +23,7 @@ export default function DatePicker(props: DatePickerProps) {
             labelClasses,
           )}
         >
-          Starting Time
-
+          {label}
         </Label>
         <Group className="flex flex-1 rounded-[5px] bg-[#E8E8E8] text-black/30 group-open:bg-white">
           <DateInput className="flex flex-1 justify-center py-1">

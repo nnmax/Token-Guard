@@ -1,3 +1,4 @@
+import { t } from 'i18next'
 import { Button, Menu, MenuItem, MenuTrigger, Popover } from 'react-aria-components'
 import { twMerge } from 'tailwind-merge'
 import DisconnectSvg from '../assets/images/disconnect.svg'
@@ -21,7 +22,7 @@ export default function ConnectedMenu(props: {
             className="flex h-9 cursor-pointer items-center gap-2 rounded-[5px] px-4"
           >
             <img src={DisconnectSvg} alt="" className="" />
-            <span>Disconnect</span>
+            <span>{t('common.disconnect')}</span>
           </MenuItem>
         </Menu>
       </Popover>

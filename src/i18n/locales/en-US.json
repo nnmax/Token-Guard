@@ -1,7 +1,40 @@
 {
+  "common": {
+    "connectWallet": "Connect Wallet",
+    "disconnect": "Disconnect",
+    "tableTime": "TIME",
+    "tableType": "TYPE",
+    "tableAmount": "AMOUNT",
+    "tableToken": "TOKEN",
+    "cancel": "Cancel",
+    "confirm": "Confirm"
+  },
   "home": {
     "legacy": "Legacy",
     "pension": "Pension",
     "trust": "Trust"
+  },
+  "legacy": {
+    "desc1": "Smart Contract Protection",
+    "desc2": "Accident Prevention",
+    "desc3": "Deposit or Withdraw at any time",
+    "desc4": "Family Heritage",
+    "desc5": "0 Inheritance Tax",
+    "desc6": "Customized",
+    "createTips": "Create a new legacy contract, deposit or withdraw at any time, <br /> and it will automatically distribute the balance to the beneficiaries <br /> when the time you set arrived.",
+    "create": "Create A New Legacy Contract",
+    "myLegacy": "My Legacy",
+    "financing": "Financing",
+    "insure": "Insure",
+    "myLegacyValue": "VALUE",
+    "deposit": "Deposit",
+    "withdraw": "Withdraw",
+    "activity": "Activity",
+    "startingTime": "Starting Time",
+    "beneficiaryWallet": "Beneficiary Wallet",
+    "beneficiaryWalletPlaceholder": "Please enter the address of the beneficiary wallet",
+    "percentage": "Percentage",
+    "addAnotherWallet": "Add Another Wallet",
+    "formDesc": "Create a new legacy contract, deposit or withdraw at any time, and it will automatically distribute the balance to the beneficiaries when the time you set arrived."
   }
 }

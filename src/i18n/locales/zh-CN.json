@@ -1,7 +1,40 @@
 {
+  "common": {
+    "connectWallet": "连接钱包",
+    "disconnect": "断开钱包",
+    "tableTime": "时间",
+    "tableType": "类型",
+    "tableAmount": "数量",
+    "tableToken": "代币",
+    "cancel": "取 消",
+    "confirm": "确 定"
+  },
   "home": {
     "legacy": "遗 产",
     "pension": "社 保",
     "trust": "信 托"
+  },
+  "legacy": {
+    "desc1": "智能合约保障",
+    "desc2": "抗意外",
+    "desc3": "随存随取",
+    "desc4": "家族传承",
+    "desc5": "0 遗产税",
+    "desc6": "自由定制",
+    "createTips": "新建一份遗产合约，随存随取，开始执行后，自动将剩余资产释放给受益钱包",
+    "create": "新建遗产合约",
+    "myLegacy": "我的遗产",
+    "financing": "生 息",
+    "insure": "投 保",
+    "myLegacyValue": "市值",
+    "deposit": "存 入",
+    "withdraw": "提 取",
+    "activity": "记录",
+    "startingTime": "执行时间",
+    "beneficiaryWallet": "受益钱包",
+    "beneficiaryWalletPlaceholder": "请输入受益钱包地址",
+    "percentage": "比例",
+    "addAnotherWallet": "添加下一个钱包",
+    "formDesc": "新建一份遗产合约，随存随取，开始执行后，自动将剩余资产释放给受益钱包"
   }
 }
