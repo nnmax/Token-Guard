@@ -28,9 +28,11 @@ const NumberField = forwardRef<HTMLInputElement, NumberFieldProps>((
         >
           {label}
         </Label>
-        <Input ref={ref} className="h-8 flex-1 rounded-[5px] bg-[#E8E8E8] px-2 disabled:cursor-not-allowed" placeholder={placeholder} />
-        {description && <Text slot="description">{description}</Text>}
-        <FieldError>{errorMessage}</FieldError>
+        <div className="flex-1">
+          <Input ref={ref} className="h-8 w-full rounded-[5px] bg-[#E8E8E8] px-2 disabled:cursor-not-allowed" placeholder={placeholder} />
+          {description && <Text slot="description" className="text-xs/5 font-medium text-black/30">{description}</Text>}
+          <FieldError>{errorMessage}</FieldError>
+        </div>
       </AriaNumberField>
       {endAdditional}
     </div>

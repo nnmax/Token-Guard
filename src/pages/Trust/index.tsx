@@ -5,7 +5,6 @@ import { Button as AriaButton, Form, Heading } from 'react-aria-components'
 import { Controller, useFieldArray, useForm } from 'react-hook-form'
 import { Trans } from 'react-i18next'
 import { useAccount } from 'wagmi'
-
 import ActivityTable from '../../components/ActivityTable'
 import Button from '../../components/Button'
 import ConnectButton from '../../components/ConnectButton'
@@ -50,21 +49,21 @@ const tableData = [
   },
 ]
 
-export default function LegacyPage() {
+export default function TrustPage() {
   const { isConnected } = useAccount()
 
   const keynotes = useMemo(() => [
-    t('legacy.desc1'),
-    t('legacy.desc2'),
-    t('legacy.desc3'),
-    t('legacy.desc4'),
-    t('legacy.desc5'),
-    t('legacy.desc6'),
+    t('trust.desc1'),
+    t('trust.desc2'),
+    t('trust.desc3'),
+    t('trust.desc4'),
+    t('trust.desc5'),
+    t('trust.desc6'),
   ], [])
 
   return (
     <Layout>
-      <Title>{t('home.legacy')}</Title>
+      <Title>{t('home.trust')}</Title>
       <ConnectedMenu />
       <Keynote>
         {keynotes}
@@ -75,10 +74,10 @@ export default function LegacyPage() {
               <>
                 <FormModal />
                 <p className="mt-[26px] text-center text-xs/5 font-medium text-[#6E86C2]">
-                  <Trans i18nKey="legacy.createTips" />
+                  <Trans i18nKey="trust.createTips" />
                 </p>
                 <MyRecord
-                  title={t('legacy.myLegacy')}
+                  title={t('trust.myTrust')}
                   onClickShowDetails={() => {}}
                   data={null}
                   handleNode={(
@@ -124,7 +123,7 @@ function FormModal() {
     <>
       <Button className="mx-auto mt-[120px] w-[248px]" onPress={() => setOpen(true)}>
         <span className="icon-[ic--baseline-plus] text-base"></span>
-        <span>{t('legacy.create')}</span>
+        <span>{t('trust.create')}</span>
       </Button>
 
       <Modal
@@ -132,7 +131,7 @@ function FormModal() {
         onClose={() => setOpen(false)}
         className="px-14 pb-6 pt-14"
       >
-        <Heading slot="title" className="sr-only">{t('legacy.create')}</Heading>
+        <Heading slot="title" className="sr-only">{t('trust.create')}</Heading>
         <Form
           className="flex flex-col gap-5"
           onSubmit={_handleSubmit(handleSubmit)}
@@ -142,7 +141,7 @@ function FormModal() {
             name="startingTime"
             render={({ field, fieldState }) => (
               <DatePicker
-                label={t('legacy.startingTime')}
+                label={t('trust.startingTime')}
                 isRequired
                 validationBehavior="aria"
                 isInvalid={fieldState.invalid}
@@ -173,8 +172,8 @@ function FormModal() {
                       labelClasses={labelClasses}
                       isDisabled={disabled}
                       autoComplete="off"
-                      label={`${t('legacy.beneficiaryWallet')}${fields.length > 1 ? ` (${index + 1})` : ''}`}
-                      placeholder={t('legacy.beneficiaryWalletPlaceholder')}
+                      label={`${t('trust.beneficiaryWallet')}${fields.length > 1 ? ` (${index + 1})` : ''}`}
+                      placeholder={t('trust.beneficiaryWalletPlaceholder')}
                       endAdditional={index === 0
                         ? <span className="size-8" />
                         : (
@@ -202,7 +201,7 @@ function FormModal() {
                       isInvalid={fieldState.invalid}
                       labelClasses={labelClasses}
                       className="mt-7"
-                      label={t('legacy.percentage')}
+                      label={t('trust.percentage')}
                       isDisabled={disabled}
                       endAdditional={<span className="flex size-8 items-center justify-center">%</span>}
                     />
@@ -224,7 +223,7 @@ function FormModal() {
             <Button type="submit" className="w-[168px]">{t('common.confirm')}</Button>
           </div>
           <p className="mt-4 text-center text-xs font-medium text-[#6E86C2]">
-            {t('legacy.formDesc')}
+            {t('trust.formDesc')}
           </p>
         </Form>
       </Modal>

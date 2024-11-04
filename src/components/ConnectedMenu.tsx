@@ -1,23 +1,19 @@
 import { t } from 'i18next'
 import { Button, Menu, MenuItem, MenuTrigger, Popover } from 'react-aria-components'
-import { twMerge } from 'tailwind-merge'
 import { useAccount, useDisconnect } from 'wagmi'
 import DisconnectSvg from '../assets/images/disconnect.svg'
 
-export default function ConnectedMenu(props: {
-  className?: string
-}) {
-  const { className } = props
+export default function ConnectedMenu() {
   const { disconnect } = useDisconnect()
-  const { address } = useAccount()
+  const { address, isConnected } = useAccount()
 
-  if (!address) {
+  if (!address || !isConnected) {
     return null
   }
 
   return (
     <MenuTrigger>
-      <Button className={twMerge('flex h-8 items-center gap-2 rounded-[5px] border border-[#807A86A5] px-4 text-sm font-medium text-[#7A86A5]', className)}>
+      <Button className="absolute right-28 top-1 flex h-8 items-center gap-2 rounded-[5px] border border-[#807A86A5] px-4 text-sm font-medium text-[#7A86A5]">
         <span className="icon-[mingcute--wallet-fill] text-xl text-[#3255AC]"></span>
         <span>
           {address.slice(2, 6)}
