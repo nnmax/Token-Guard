@@ -1,2 +1,2 @@
-export const SIGNATURE_KEY = 'crypto-safe.signature'
-export const MESSAGE_KEY = 'crypto-safe.message'
+export const SIGNATURE_KEY = 'token-guard.signature'
+export const MESSAGE_KEY = 'token-guard.message'
