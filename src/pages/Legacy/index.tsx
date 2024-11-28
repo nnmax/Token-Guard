@@ -12,6 +12,7 @@ import Button from '../../components/Button'
 import ConnectButton from '../../components/ConnectButton'
 import ConnectedMenu from '../../components/ConnectedMenu'
 import DatePicker from '../../components/DatePicker'
+import DepositModal, { type FormValues as DepositModalFormValues } from '../../components/DepositModal'
 import Keynote from '../../components/Keynote'
 import Layout from '../../components/Layout'
 import Modal from '../../components/Modal'
@@ -245,6 +246,19 @@ function MainContent() {
       ],
     },
   })
+  const { mutateAsync: depositWill, isPending: depositing } = $api.useMutation('post', '/deposit-will')
+  const [depositModalOpen, setDepositModalOpen] = useState(false)
+
+  const handleDeposit = async (values: DepositModalFormValues) => {
+    await depositWill({
+      body: values,
+    }).then(() => {
+      toast.success(t('common.depositSuccessful'))
+    }).catch((error) => {
+      console.error(error)
+      toast.error(t('common.depositFailure'))
+    })
+  }
 
   return (
     <>
@@ -268,11 +282,12 @@ function MainContent() {
           : null}
         handleNode={(
           <>
-            <Button size="small" className="w-[72px]">{t('common.deposit')}</Button>
+            <Button size="small" className="w-[72px]" onPress={() => setDepositModalOpen(true)}>{t('common.deposit')}</Button>
             <Button size="small" variant="outline" className="w-[72px]">{t('common.withdraw')}</Button>
           </>
         )}
       />
+      <DepositModal isOpen={depositModalOpen} onClose={() => setDepositModalOpen(false)} handleDeposit={handleDeposit} depositing={depositing} />
       <ActivityTable assetMode={0} />
     </>
   )

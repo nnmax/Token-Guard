@@ -12,7 +12,13 @@
     "insure": "投 保",
     "deposit": "存 入",
     "withdraw": "提 取",
-    "addAnotherWallet": "添加下一个钱包"
+    "addAnotherWallet": "添加下一个钱包",
+    "depositAmount": "存入数量",
+    "withdrawAmount": "提取数量",
+    "max": "最 大",
+    "available": "可用余额",
+    "depositSuccessful": "存入成功",
+    "depositFailure": "存入失败"
   },
   "home": {
     "legacy": "遗 产",

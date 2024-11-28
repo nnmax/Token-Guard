@@ -3,7 +3,7 @@ import clsx from 'clsx'
 import { Modal as AriaModal, Button, Dialog, DialogTrigger, ModalOverlay } from 'react-aria-components'
 import { twMerge } from 'tailwind-merge'
 
-interface ModalProps extends Omit<ModalOverlayProps, 'className' | 'children'> {
+export interface ModalProps extends Omit<ModalOverlayProps, 'className' | 'children'> {
   'className'?: string
   'trigger'?: React.ReactNode
   'children'?: DialogProps['children']

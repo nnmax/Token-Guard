@@ -12,7 +12,13 @@
     "insure": "Insure",
     "deposit": "Deposit",
     "withdraw": "Withdraw",
-    "addAnotherWallet": "Add Another Wallet"
+    "addAnotherWallet": "Add Another Wallet",
+    "depositAmount": "AMOUNT",
+    "withdrawAmount": "AMOUNT",
+    "max": "MAX",
+    "available": "AVAILABLE",
+    "depositSuccessful": "Deposit Successful",
+    "depositFailure": "Deposit Failure"
   },
   "home": {
     "legacy": "Legacy",
