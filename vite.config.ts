@@ -10,4 +10,14 @@ export default defineConfig({
     }),
     enforce: 'pre',
   }],
+  server: {
+    host: '0.0.0.0',
+    proxy: {
+      '/api': {
+        target: 'https://xpmzgpess2hxh6hjvfxqatpkwu0nqnyv.lambda-url.us-west-2.on.aws',
+        changeOrigin: true,
+        rewrite: path => path.replace(/^\/api/, ''),
+      },
+    },
+  },
 })

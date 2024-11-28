@@ -10,11 +10,11 @@ export default function MyRecord(props: {
   onClickShowDetails: () => void
   handleNode: React.ReactNode
   data: {
-    value: number | null
-    wbtc: number | null
-    weth: number | null
-    usdt: number | null
-    usdc: number | null
+    value?: number
+    wbtc?: number
+    weth?: number
+    usdt?: number
+    usdc?: number
   } | null
 }) {
   const { title, onClickShowDetails, handleNode, data } = props

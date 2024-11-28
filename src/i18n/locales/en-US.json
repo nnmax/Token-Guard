@@ -31,9 +31,11 @@
     "myLegacy": "My Legacy",
     "activity": "Activity",
     "startingTime": "Starting Time",
+    "startingTimeRequired": "Please select the starting time",
     "beneficiaryWallet": "Beneficiary Wallet",
     "beneficiaryWalletPlaceholder": "Please enter the address of the beneficiary wallet",
     "percentage": "Percentage",
+    "percentageTotal": "*The total proportion of the beneficiary wallets must not exceed 100%",
     "formDesc": "Create a new legacy contract, deposit or withdraw at any time, and it will automatically distribute the balance to the beneficiaries when the time you set arrived."
   },
   "pension": {

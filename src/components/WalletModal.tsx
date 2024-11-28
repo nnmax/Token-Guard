@@ -1,27 +1,30 @@
 import type { Connector } from 'wagmi'
-import { useMemo, useState } from 'react'
+import type { components } from '../api/schema'
+import { useEffect, useMemo, useState } from 'react'
 import { Heading } from 'react-aria-components'
+import { toast } from 'react-toastify'
 import { ConnectorAlreadyConnectedError, useAccount, useChainId, useConnect, useSignMessage } from 'wagmi'
-import { MESSAGE_KEY, SIGNATURE_KEY } from '../constants'
-import { useWalletModalOpen } from '../store/hooks'
+import $api from '../api/fetchClient'
+import { AUTHORIZATION_KEY, MESSAGE_KEY, SIGNATURE_KEY } from '../constants'
+import { useConnectedAndAuthorized, useWalletModalOpen } from '../store/hooks'
 import Modal from './Modal'
 
 export default function WalletModal() {
   const [pendingWallet, setPendingWallet] = useState<Connector>()
-  // const queryClient = useQueryClient()
   const { data: walletModalOpen, setData: setWalletModalOpen } = useWalletModalOpen()
   const { connectAsync } = useConnect()
-  // const { data: userInfo } = useUserInfo()
   const chainId = useChainId()
-  const { addresses: accountAddresses } = useAccount()
+  const { isConnected, addresses: accountAddresses } = useAccount()
+  const { data: connectedAndAuthorized, setData: setConnectedAndAuthorized } = useConnectedAndAuthorized()
   const { signMessageAsync } = useSignMessage()
+  const { mutateAsync: connectWalletApi } = $api.useMutation('post', '/connect-wallet')
 
-  // const updateUserInfo = (data: ConnectWalletData) => {
-  //   queryClient.setQueryData<GetUserData | undefined>(['get-current-login-user'], data)
-  // }
+  useEffect(() => {
+    setConnectedAndAuthorized(isConnected && !!localStorage.getItem(AUTHORIZATION_KEY))
+  }, [isConnected, setConnectedAndAuthorized])
 
   const tryActivation = async (connector: Connector) => {
-    setPendingWallet(connector) // set wallet for pending view
+    setPendingWallet(connector)
 
     try {
       const { accounts } = await connectAsync({
@@ -29,60 +32,78 @@ export default function WalletModal() {
         chainId,
       }).catch((error) => {
         if (error instanceof ConnectorAlreadyConnectedError) {
-          // if (userInfo) {
-          //   toggleWalletModal()
-          //   throw error
-          // }
-          // else if (accountAddresses) {
-          return { accounts: accountAddresses }
-          // }
+          if (connectedAndAuthorized) {
+            setWalletModalOpen(false)
+            throw error
+          }
+          else if (accountAddresses) {
+            return { accounts: accountAddresses }
+          }
         }
         throw error
       })
 
+      if (!accounts) {
+        toast.error('Failed to connect wallet')
+        return
+      }
+
       const s = window.localStorage.getItem(SIGNATURE_KEY)
       const m = window.localStorage.getItem(MESSAGE_KEY)
 
-      const connectWalletResponse: string /* | ConnectWalletData */ | false = 'Test Sign Message'
+      let connectWalletResponse: false | components['schemas']['ConnectWalletResponse'] = false
       if (m && s) {
-        // connectWalletResponse = await connectWallet({
-        //   address: accounts[0],
-        //   signature: s,
-        //   message: m,
-        //   disabledErrorToast: true,
-        // }).catch((err) => {
-        //   console.error(err)
-        //   return false
-        // })
+        connectWalletResponse = await connectWalletApi({
+          body: {
+            address: accounts[0],
+            signature: s,
+            message: m,
+          },
+        }).then((response) => {
+          if (response.code !== 200) {
+            throw response
+          }
+          return response
+        }).catch((err) => {
+          console.error(err)
+          return false
+        })
       }
-      // if (connectWalletResponse === false) {
-      //   connectWalletResponse = await connectWallet({
-      //     address: accounts[0],
-      //   })
-      // }
+      if (connectWalletResponse === false) {
+        connectWalletResponse = await connectWalletApi({
+          body: {
+            address: accounts[0],
+            signature: '',
+            message: '',
+          },
+        })
+      }
 
-      if (accounts && typeof connectWalletResponse === 'string') {
+      let authorization = connectWalletResponse.authorization
+      if (accounts && typeof connectWalletResponse.message_to_sign === 'string') {
         const signature = await signMessageAsync({
-          message: connectWalletResponse,
+          message: connectWalletResponse.message_to_sign,
           account: accounts[0],
         })
-        // const connectWalletResponse2 = await connectWallet({
-        //   address: accounts![0],
-        //   signature,
-        //   message: connectWalletResponse,
-        // })
-        // if (typeof connectWalletResponse2 === 'string') {
-        //   setPendingWallet(undefined)
-        //   return
-        // }
+        const connectWalletResponse2 = await connectWalletApi({
+          body: {
+            address: accounts![0],
+            signature,
+            message: connectWalletResponse.message_to_sign,
+          },
+        })
+        authorization = connectWalletResponse2.authorization
         window.localStorage.setItem(SIGNATURE_KEY, signature)
-        window.localStorage.setItem(MESSAGE_KEY, connectWalletResponse)
-        // updateUserInfo(connectWalletResponse2)
+        window.localStorage.setItem(MESSAGE_KEY, connectWalletResponse.message_to_sign)
+      }
+
+      if (authorization) {
+        window.localStorage.setItem(AUTHORIZATION_KEY, authorization)
       }
       else {
-        // updateUserInfo(connectWalletResponse)
+        throw new Error('Authorization not found')
       }
-      // queryClient.invalidateQueries()
+      setConnectedAndAuthorized(true)
       setPendingWallet(undefined)
       setWalletModalOpen(false)
     }

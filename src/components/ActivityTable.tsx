@@ -1,20 +1,32 @@
 import clsx from 'clsx'
 import { t } from 'i18next'
 import { Cell, Column, Row, Table, TableBody, TableHeader } from 'react-aria-components'
-
-interface ActivityData {
-  id: string
-  time: string
-  type: 'DEPOSIT' | 'WITHDRAW'
-  token: string
-  amount: string
-}
+import $api from '../api/fetchClient'
 
 export default function ActivityTable(props: {
-  data: ActivityData[]
+  assetMode: 0 | 1 | 2
 }) {
-  const { data } = props
+  const { assetMode } = props
   const thClasses = 'text-xs/6 font-semibold text-[#1A1A1A]/70'
+
+  const { data: operations, isLoading } = $api.useQuery('get', '/get-asset-operations', {
+    params: {
+      query: {
+        asset_mode: assetMode,
+      },
+    },
+  }, {
+    initialData: {
+      code: 0,
+      total: 4,
+      operations: Array.from({ length: 4 }, (_, i) => ({
+        amount: 123.321,
+        operation_type: i % 2 === 0 ? 'DEPOSIT' : 'WITHDRAW',
+        timestamp: Date.now() - i * 1000,
+        token: 'WBTC',
+      })),
+    },
+  })
 
   return (
     <section className="mt-[60px]">
@@ -26,17 +38,24 @@ export default function ActivityTable(props: {
           <Column className={thClasses}>{t('common.tableToken')}</Column>
           <Column className={thClasses}>{t('common.tableAmount')}</Column>
         </TableHeader>
-        <TableBody items={data}>
+        <TableBody
+          items={operations?.operations}
+          renderEmptyState={
+            isLoading
+              ? () => <p className="mt-10 text-2xl text-[#9e9e9e] loading" />
+              : () => <p className="mt-10 text-sm text-[#9e9e9e]">NO DATA</p>
+          }
+        >
           {
             item => (
               <Row
-                id={item.id}
+                id={JSON.stringify(item)}
                 className={clsx('h-[60px] border-b border-[#6E86C2]', {
-                  'bg-[#7A86A5]/20': item.type === 'WITHDRAW',
+                  'bg-[#7A86A5]/20': item.operation_type === 'WITHDRAW',
                 })}
               >
-                <Cell className="text-sm/6 font-medium text-[#1A1A1A]">{item.time}</Cell>
-                <Cell className="text-xs/5 font-medium text-[#7A86A5]">{item.type}</Cell>
+                <Cell className="text-sm/6 font-medium text-[#1A1A1A]">{item.timestamp}</Cell>
+                <Cell className="text-xs/5 font-medium text-[#7A86A5]">{item.operation_type}</Cell>
                 <Cell className="text-sm/6 font-semibold text-[#3255AC]">{item.token}</Cell>
                 <Cell className="text-sm/6 font-medium text-[#1A1A1A]">{item.amount}</Cell>
               </Row>

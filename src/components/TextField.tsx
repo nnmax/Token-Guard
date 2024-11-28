@@ -33,7 +33,7 @@ const TextField = forwardRef<HTMLInputElement, TextFieldProps>((
         <div className="flex flex-1 flex-col gap-1">
           <Input
             ref={ref}
-            className="h-8 rounded-[5px] bg-[#E8E8E8] px-2"
+            className="h-8 rounded-[5px] bg-[#E8E8E8] px-2 data-[invalid]:border data-[invalid]:border-[#FA5151]"
             placeholder={placeholder}
           />
           {description && <Text slot="description">{description}</Text>}

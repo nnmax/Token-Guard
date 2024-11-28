@@ -9,7 +9,7 @@ export function createGlobalState<T>(
     setData: (data: T) => void
     resetData: () => void
   } {
-  return () => {
+  return function useGlobalState() {
     const queryClient = useQueryClient()
 
     const { data } = useQuery({

@@ -1,0 +1,1846 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "FastAPI",
+    "version": "0.1.0"
+  },
+  "paths": {
+    "/connect-wallet": {
+      "post": {
+        "summary": "Connect Wallet",
+        "description": "登录",
+        "operationId": "connect_wallet_connect_wallet_post",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ConnectWalletRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConnectWalletResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/open-financing": {
+      "post": {
+        "summary": "Open Financing",
+        "description": "开启理财",
+        "operationId": "open_financing_open_financing_post",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FinancingRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FinancingResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/close-financing": {
+      "post": {
+        "summary": "Close Financing",
+        "description": "关闭理财",
+        "operationId": "close_financing_close_financing_post",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FinancingRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FinancingResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/create-will": {
+      "post": {
+        "summary": "Create Will",
+        "description": "创建遗产",
+        "operationId": "create_will_create_will_post",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateWillRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CalldataResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/set-will-release-time": {
+      "post": {
+        "summary": "Set Will Release Time",
+        "description": "设置遗产执行时间",
+        "operationId": "set_will_release_time_set_will_release_time_post",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SetReleaseTimeRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CalldataResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/set-will-beneficiary": {
+      "post": {
+        "summary": "Set Will Beneficiary",
+        "description": "设置遗产受益人及比例",
+        "operationId": "set_will_beneficiary_set_will_beneficiary_post",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SetBeneficiaryRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CalldataResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/set-will-insurance": {
+      "post": {
+        "summary": "Set Will Insurance",
+        "description": "设置遗产投保状态",
+        "operationId": "set_will_insurance_set_will_insurance_post",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SetInsuranceRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CalldataResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/set-will-finance": {
+      "post": {
+        "summary": "Set Will Finance",
+        "description": "设置遗产理财状态",
+        "operationId": "set_will_finance_set_will_finance_post",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SetFinanceRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CalldataResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/deposit-will": {
+      "post": {
+        "summary": "Deposit Will",
+        "description": "增加遗产",
+        "operationId": "deposit_will_deposit_will_post",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TokenAmount"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MultiCalldataResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/withdraw-will": {
+      "post": {
+        "summary": "Withdraw Will",
+        "description": "提取遗产",
+        "operationId": "withdraw_will_withdraw_will_post",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TokenAmount"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CalldataResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/withdraw-will-all": {
+      "post": {
+        "summary": "Withdraw Will All",
+        "description": "提取全部遗产",
+        "operationId": "withdraw_will_all_withdraw_will_all_post",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CalldataResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/create-social-security": {
+      "post": {
+        "summary": "Create Social Security",
+        "description": "创建社保",
+        "operationId": "create_social_security_create_social_security_post",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateSocialSecurityRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CalldataResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/set-social-security-insurance": {
+      "post": {
+        "summary": "Set Social Security Insurance",
+        "description": "设置社保投保状态",
+        "operationId": "set_social_security_insurance_set_social_security_insurance_post",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SetInsuranceRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CalldataResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/set-social-security-finance": {
+      "post": {
+        "summary": "Set Social Security Finance",
+        "description": "设置社保理财状态",
+        "operationId": "set_social_security_finance_set_social_security_finance_post",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SetFinanceRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CalldataResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/deposit-social-security": {
+      "post": {
+        "summary": "Deposit Social Security",
+        "description": "增加社保",
+        "operationId": "deposit_social_security_deposit_social_security_post",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TokenAmount"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MultiCalldataResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/create-trust": {
+      "post": {
+        "summary": "Create Trust",
+        "description": "创建信托",
+        "operationId": "create_trust_create_trust_post",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateTrustRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CalldataResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/set-trust-release-time": {
+      "post": {
+        "summary": "Set Trust Release Time",
+        "description": "设置信托下一次领取时间",
+        "operationId": "set_trust_release_time_set_trust_release_time_post",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SetReleaseTimeRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CalldataResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/set-trust-beneficiary": {
+      "post": {
+        "summary": "Set Trust Beneficiary",
+        "description": "设置信托受益人及比例",
+        "operationId": "set_trust_beneficiary_set_trust_beneficiary_post",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SetBeneficiaryRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CalldataResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/set-trust-release-percent": {
+      "post": {
+        "summary": "Set Trust Release Percent",
+        "description": "设置信托每个月可领取比例",
+        "operationId": "set_trust_release_percent_set_trust_release_percent_post",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SetTrustReleasePercentRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CalldataResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/set-trust-insurance": {
+      "post": {
+        "summary": "Set Trust Insurance",
+        "description": "设置信托投保状态",
+        "operationId": "set_trust_insurance_set_trust_insurance_post",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SetInsuranceRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CalldataResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/set-trust-finance": {
+      "post": {
+        "summary": "Set Trust Finance",
+        "description": "设置信托理财状态",
+        "operationId": "set_trust_finance_set_trust_finance_post",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SetFinanceRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CalldataResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/deposit-trust": {
+      "post": {
+        "summary": "Deposit Trust",
+        "description": "增加信托",
+        "operationId": "deposit_trust_deposit_trust_post",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TokenAmount"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MultiCalldataResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/withdraw-trust": {
+      "post": {
+        "summary": "Withdraw Trust",
+        "description": "提取信托",
+        "operationId": "withdraw_trust_withdraw_trust_post",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TokenAmount"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CalldataResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/withdraw-trust-all": {
+      "post": {
+        "summary": "Withdraw Trust All",
+        "description": "提取全部信托",
+        "operationId": "withdraw_trust_all_withdraw_trust_all_post",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CalldataResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/get-will": {
+      "get": {
+        "summary": "Get Will",
+        "description": "获取遗产信息",
+        "operationId": "get_will_get_will_get",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetWillResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/get-social-security": {
+      "get": {
+        "summary": "Get Social Security",
+        "description": "获取社保信息",
+        "operationId": "get_social_security_get_social_security_get",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetSocialSecurityResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/get-trust": {
+      "get": {
+        "summary": "Get Trust",
+        "description": "获取信托信息",
+        "operationId": "get_trust_get_trust_get",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetTrustResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/get-balance": {
+      "get": {
+        "summary": "Get Balance",
+        "description": "获取用户余额",
+        "operationId": "get_balance_get_balance_get",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Token"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetBalanceResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/get-fee-rates": {
+      "get": {
+        "summary": "Get Fee Rates",
+        "description": "获取各种费率信息",
+        "operationId": "get_fee_rates_get_fee_rates_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetFeeRatesResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/get-asset-operations": {
+      "get": {
+        "summary": "Get Asset Operations",
+        "description": "获取用户在某一资产模式下的全部操作记录",
+        "operationId": "get_asset_operations_get_asset_operations_get",
+        "parameters": [
+          {
+            "name": "asset_mode",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/AssetMode"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Limit"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 0,
+              "title": "Offset"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetAssetOperationsResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/status": {
+      "get": {
+        "summary": "Status",
+        "description": "健康检查",
+        "operationId": "status_status_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AssetMode": {
+        "type": "integer",
+        "enum": [
+          0,
+          1,
+          2
+        ],
+        "title": "AssetMode"
+      },
+      "AssetOperation": {
+        "properties": {
+          "timestamp": {
+            "type": "integer",
+            "title": "Timestamp"
+          },
+          "operation_type": {
+            "type": "string",
+            "title": "Operation Type"
+          },
+          "token": {
+            "type": "string",
+            "title": "Token"
+          },
+          "amount": {
+            "type": "number",
+            "title": "Amount"
+          }
+        },
+        "type": "object",
+        "required": [
+          "timestamp",
+          "operation_type",
+          "token",
+          "amount"
+        ],
+        "title": "AssetOperation"
+      },
+      "Beneficiary": {
+        "properties": {
+          "benAddr": {
+            "type": "string",
+            "title": "Benaddr"
+          },
+          "percent": {
+            "type": "number",
+            "title": "Percent"
+          }
+        },
+        "type": "object",
+        "required": [
+          "benAddr",
+          "percent"
+        ],
+        "title": "Beneficiary"
+      },
+      "CalldataResponse": {
+        "properties": {
+          "code": {
+            "type": "integer",
+            "title": "Code"
+          },
+          "calldata": {
+            "type": "string",
+            "title": "Calldata"
+          }
+        },
+        "type": "object",
+        "required": [
+          "code",
+          "calldata"
+        ],
+        "title": "CalldataResponse"
+      },
+      "ConnectWalletRequest": {
+        "properties": {
+          "address": {
+            "type": "string",
+            "title": "Address"
+          },
+          "signature": {
+            "type": "string",
+            "title": "Signature"
+          },
+          "message": {
+            "type": "string",
+            "title": "Message"
+          }
+        },
+        "type": "object",
+        "required": [
+          "address",
+          "signature",
+          "message"
+        ],
+        "title": "ConnectWalletRequest"
+      },
+      "ConnectWalletResponse": {
+        "properties": {
+          "code": {
+            "type": "integer",
+            "title": "Code"
+          },
+          "message_to_sign": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message To Sign"
+          },
+          "authorization": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Authorization"
+          }
+        },
+        "type": "object",
+        "required": [
+          "code",
+          "message_to_sign",
+          "authorization"
+        ],
+        "title": "ConnectWalletResponse"
+      },
+      "CreateSocialSecurityRequest": {
+        "properties": {
+          "release_time": {
+            "type": "integer",
+            "title": "Release Time"
+          },
+          "is_insured": {
+            "type": "boolean",
+            "title": "Is Insured"
+          },
+          "release_months": {
+            "type": "integer",
+            "title": "Release Months"
+          }
+        },
+        "type": "object",
+        "required": [
+          "release_time",
+          "is_insured",
+          "release_months"
+        ],
+        "title": "CreateSocialSecurityRequest"
+      },
+      "CreateTrustRequest": {
+        "properties": {
+          "release_time": {
+            "type": "integer",
+            "title": "Release Time"
+          },
+          "is_insured": {
+            "type": "boolean",
+            "title": "Is Insured"
+          },
+          "beneficiaries": {
+            "items": {
+              "$ref": "#/components/schemas/Beneficiary"
+            },
+            "type": "array",
+            "title": "Beneficiaries"
+          },
+          "release_percent": {
+            "type": "integer",
+            "title": "Release Percent"
+          }
+        },
+        "type": "object",
+        "required": [
+          "release_time",
+          "is_insured",
+          "beneficiaries",
+          "release_percent"
+        ],
+        "title": "CreateTrustRequest"
+      },
+      "CreateWillRequest": {
+        "properties": {
+          "release_time": {
+            "type": "integer",
+            "title": "Release Time"
+          },
+          "is_insured": {
+            "type": "boolean",
+            "title": "Is Insured"
+          },
+          "beneficiaries": {
+            "items": {
+              "$ref": "#/components/schemas/Beneficiary"
+            },
+            "type": "array",
+            "title": "Beneficiaries"
+          }
+        },
+        "type": "object",
+        "required": [
+          "release_time",
+          "is_insured",
+          "beneficiaries"
+        ],
+        "title": "CreateWillRequest"
+      },
+      "FinancingRequest": {
+        "properties": {
+          "message": {
+            "type": "string",
+            "title": "Message"
+          },
+          "messageSignature": {
+            "type": "string",
+            "title": "Messagesignature"
+          }
+        },
+        "type": "object",
+        "required": [
+          "message",
+          "messageSignature"
+        ],
+        "title": "FinancingRequest"
+      },
+      "FinancingResponse": {
+        "properties": {
+          "code": {
+            "type": "integer",
+            "title": "Code"
+          }
+        },
+        "type": "object",
+        "required": [
+          "code"
+        ],
+        "title": "FinancingResponse"
+      },
+      "GetAssetOperationsResponse": {
+        "properties": {
+          "code": {
+            "type": "integer",
+            "title": "Code"
+          },
+          "total": {
+            "type": "integer",
+            "title": "Total"
+          },
+          "operations": {
+            "items": {
+              "$ref": "#/components/schemas/AssetOperation"
+            },
+            "type": "array",
+            "title": "Operations"
+          }
+        },
+        "type": "object",
+        "required": [
+          "code",
+          "total",
+          "operations"
+        ],
+        "title": "GetAssetOperationsResponse"
+      },
+      "GetBalanceResponse": {
+        "properties": {
+          "code": {
+            "type": "integer",
+            "title": "Code"
+          },
+          "balance": {
+            "type": "number",
+            "title": "Balance"
+          }
+        },
+        "type": "object",
+        "required": [
+          "code",
+          "balance"
+        ],
+        "title": "GetBalanceResponse"
+      },
+      "GetFeeRatesResponse": {
+        "properties": {
+          "code": {
+            "type": "integer",
+            "title": "Code"
+          },
+          "feeRateWill": {
+            "type": "number",
+            "title": "Feeratewill"
+          },
+          "feeRateSocialSecurity": {
+            "type": "number",
+            "title": "Feeratesocialsecurity"
+          },
+          "feeRateTrust": {
+            "type": "number",
+            "title": "Feeratetrust"
+          },
+          "insuranceRate": {
+            "type": "number",
+            "title": "Insurancerate"
+          }
+        },
+        "type": "object",
+        "required": [
+          "code",
+          "feeRateWill",
+          "feeRateSocialSecurity",
+          "feeRateTrust",
+          "insuranceRate"
+        ],
+        "title": "GetFeeRatesResponse"
+      },
+      "GetSocialSecurityResponse": {
+        "properties": {
+          "code": {
+            "type": "integer",
+            "title": "Code"
+          },
+          "ReleaseTime": {
+            "type": "integer",
+            "title": "Releasetime"
+          },
+          "isInsured": {
+            "type": "boolean",
+            "title": "Isinsured"
+          },
+          "lastPremiumTime": {
+            "type": "integer",
+            "title": "Lastpremiumtime"
+          },
+          "assets": {
+            "items": {
+              "$ref": "#/components/schemas/TokenAmount"
+            },
+            "type": "array",
+            "title": "Assets"
+          },
+          "totalValueUSD": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Totalvalueusd"
+          },
+          "releaseMonths": {
+            "type": "integer",
+            "title": "Releasemonths"
+          }
+        },
+        "type": "object",
+        "required": [
+          "code",
+          "ReleaseTime",
+          "isInsured",
+          "lastPremiumTime",
+          "assets",
+          "totalValueUSD",
+          "releaseMonths"
+        ],
+        "title": "GetSocialSecurityResponse"
+      },
+      "GetTrustResponse": {
+        "properties": {
+          "code": {
+            "type": "integer",
+            "title": "Code"
+          },
+          "ReleaseTime": {
+            "type": "integer",
+            "title": "Releasetime"
+          },
+          "isInsured": {
+            "type": "boolean",
+            "title": "Isinsured"
+          },
+          "lastPremiumTime": {
+            "type": "integer",
+            "title": "Lastpremiumtime"
+          },
+          "assets": {
+            "items": {
+              "$ref": "#/components/schemas/TokenAmount"
+            },
+            "type": "array",
+            "title": "Assets"
+          },
+          "totalValueUSD": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Totalvalueusd"
+          },
+          "beneficiaries": {
+            "items": {
+              "$ref": "#/components/schemas/Beneficiary"
+            },
+            "type": "array",
+            "title": "Beneficiaries"
+          },
+          "releasePercent": {
+            "type": "number",
+            "title": "Releasepercent"
+          }
+        },
+        "type": "object",
+        "required": [
+          "code",
+          "ReleaseTime",
+          "isInsured",
+          "lastPremiumTime",
+          "assets",
+          "totalValueUSD",
+          "beneficiaries",
+          "releasePercent"
+        ],
+        "title": "GetTrustResponse"
+      },
+      "GetWillResponse": {
+        "properties": {
+          "code": {
+            "type": "integer",
+            "title": "Code"
+          },
+          "releaseTime": {
+            "type": "integer",
+            "title": "Releasetime"
+          },
+          "isInsured": {
+            "type": "boolean",
+            "title": "Isinsured"
+          },
+          "lastPremiumTime": {
+            "type": "integer",
+            "title": "Lastpremiumtime"
+          },
+          "assets": {
+            "items": {
+              "$ref": "#/components/schemas/TokenAmount"
+            },
+            "type": "array",
+            "title": "Assets"
+          },
+          "totalValueUSD": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Totalvalueusd"
+          },
+          "beneficiaries": {
+            "items": {
+              "$ref": "#/components/schemas/Beneficiary"
+            },
+            "type": "array",
+            "title": "Beneficiaries"
+          }
+        },
+        "type": "object",
+        "required": [
+          "code",
+          "releaseTime",
+          "isInsured",
+          "lastPremiumTime",
+          "assets",
+          "totalValueUSD",
+          "beneficiaries"
+        ],
+        "title": "GetWillResponse"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "MultiCalldataResponse": {
+        "properties": {
+          "code": {
+            "type": "integer",
+            "title": "Code"
+          },
+          "multiCalldata": {
+            "items": {
+              "$ref": "#/components/schemas/TypeCalldata"
+            },
+            "type": "array",
+            "title": "Multicalldata"
+          }
+        },
+        "type": "object",
+        "required": [
+          "code",
+          "multiCalldata"
+        ],
+        "title": "MultiCalldataResponse"
+      },
+      "SetBeneficiaryRequest": {
+        "properties": {
+          "beneficiaries": {
+            "items": {
+              "$ref": "#/components/schemas/Beneficiary"
+            },
+            "type": "array",
+            "title": "Beneficiaries"
+          }
+        },
+        "type": "object",
+        "required": [
+          "beneficiaries"
+        ],
+        "title": "SetBeneficiaryRequest"
+      },
+      "SetFinanceRequest": {
+        "properties": {
+          "is_financed": {
+            "type": "boolean",
+            "title": "Is Financed"
+          }
+        },
+        "type": "object",
+        "required": [
+          "is_financed"
+        ],
+        "title": "SetFinanceRequest"
+      },
+      "SetInsuranceRequest": {
+        "properties": {
+          "is_insured": {
+            "type": "boolean",
+            "title": "Is Insured"
+          }
+        },
+        "type": "object",
+        "required": [
+          "is_insured"
+        ],
+        "title": "SetInsuranceRequest"
+      },
+      "SetReleaseTimeRequest": {
+        "properties": {
+          "release_time": {
+            "type": "integer",
+            "title": "Release Time"
+          }
+        },
+        "type": "object",
+        "required": [
+          "release_time"
+        ],
+        "title": "SetReleaseTimeRequest"
+      },
+      "SetTrustReleasePercentRequest": {
+        "properties": {
+          "release_percent": {
+            "type": "integer",
+            "title": "Release Percent"
+          }
+        },
+        "type": "object",
+        "required": [
+          "release_percent"
+        ],
+        "title": "SetTrustReleasePercentRequest"
+      },
+      "TokenAmount": {
+        "properties": {
+          "token": {
+            "type": "string",
+            "title": "Token"
+          },
+          "amount": {
+            "type": "number",
+            "title": "Amount"
+          }
+        },
+        "type": "object",
+        "required": [
+          "token",
+          "amount"
+        ],
+        "title": "TokenAmount"
+      },
+      "TypeCalldata": {
+        "properties": {
+          "type": {
+            "type": "string",
+            "title": "Type"
+          },
+          "calldata": {
+            "type": "string",
+            "title": "Calldata"
+          }
+        },
+        "type": "object",
+        "required": [
+          "type",
+          "calldata"
+        ],
+        "title": "TypeCalldata"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      }
+    }
+  }
+}

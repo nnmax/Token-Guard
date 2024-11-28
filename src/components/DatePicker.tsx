@@ -1,4 +1,6 @@
 import type { DatePickerProps as AriaDatePickerProps, ButtonProps, DateValue, PopoverProps } from 'react-aria-components'
+import { getLocalTimeZone, today } from '@internationalized/date'
+import clsx from 'clsx'
 import { DatePicker as AriaDatePicker, Button, Calendar, CalendarCell, CalendarGrid, CalendarGridBody, CalendarGridHeader, CalendarHeaderCell, DateInput, DateSegment, Dialog, Group, Heading, Label, Popover, Text } from 'react-aria-components'
 import { twMerge } from 'tailwind-merge'
 
@@ -9,14 +11,22 @@ interface DatePickerProps extends AriaDatePickerProps<DateValue> {
   description?: React.ReactNode
 }
 
+const now = today(getLocalTimeZone())
+
 export default function DatePicker(props: DatePickerProps) {
-  const { labelClasses, endAdditional, label, description, ...restProps } = props
+  const { labelClasses, endAdditional, label, description, className, value, defaultValue, ...restProps } = props
+
+  const hasValue = !!value || !!defaultValue
 
   return (
     <div className="flex w-full gap-6">
       <AriaDatePicker
+        minValue={now}
+        isDateUnavailable={date => date.compare(now) < 0}
+        value={value}
+        defaultValue={defaultValue}
         {...restProps}
-        className="group flex w-full gap-2"
+        className={state => twMerge('group flex w-full gap-2', typeof className === 'function' ? className(state) : className)}
       >
         <Label
           className={twMerge(
@@ -27,8 +37,8 @@ export default function DatePicker(props: DatePickerProps) {
           {label}
         </Label>
         <div className="flex-1">
-          <Group className="flex rounded-[5px] bg-[#E8E8E8] text-black/30 group-open:bg-white">
-            <DateInput className="flex flex-1 px-2 py-1">
+          <Group className="flex rounded-[5px] bg-[#E8E8E8] group-open:bg-white">
+            <DateInput className={clsx('flex flex-1 px-2 py-1', !hasValue && 'text-black/30')}>
               {segment => (
                 <DateSegment
                   segment={segment}
@@ -68,7 +78,7 @@ export default function DatePicker(props: DatePickerProps) {
                   {date => (
                     <CalendarCell
                       date={date}
-                      className="flex size-9 cursor-default items-center justify-center rounded-full outline-none ring-violet-600/70 ring-offset-2 focus-visible:ring data-[hovered]:bg-gray-100 data-[pressed]:bg-gray-200 data-[selected]:!bg-violet-700 data-[outside-month]:text-gray-300 data-[selected]:text-white"
+                      className="flex size-9 cursor-default items-center justify-center rounded-full outline-none ring-violet-600/70 ring-offset-2 focus-visible:ring data-[hovered]:bg-gray-100 data-[pressed]:bg-gray-200 data-[selected]:!bg-violet-700 data-[outside-month]:text-gray-300 data-[selected]:text-white data-[unavailable]:text-gray-300"
                     />
                   )}
                 </CalendarGridBody>

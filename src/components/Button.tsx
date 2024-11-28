@@ -17,10 +17,12 @@ interface ButtonProps extends Omit<AriaButtonProps, 'className'> {
 }
 
 export default function Button(props: ButtonProps) {
-  const { className, size = 'medium', variant = 'primary', isDisabled, ...restProps } = props
+  const { className, size = 'medium', variant = 'primary', isDisabled, isPending, children, ...restProps } = props
 
   return (
     <AriaButton
+      isPending={isPending}
+      isDisabled={isDisabled}
       className={twMerge(
         clsx(
           'flex items-center justify-center gap-1.5 text-xs font-medium',
@@ -38,6 +40,18 @@ export default function Button(props: ButtonProps) {
         className,
       )}
       {...restProps}
-    />
+    >
+      {state => (
+        <>
+          {isPending
+            ? (
+                <span className="loading" aria-label="Loading..." />
+              )
+            : (
+                typeof children === 'function' ? children(state) : children
+              )}
+        </>
+      )}
+    </AriaButton>
   )
 }

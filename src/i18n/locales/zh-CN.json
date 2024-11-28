@@ -31,9 +31,11 @@
     "myLegacy": "我的遗产",
     "activity": "记录",
     "startingTime": "执行时间",
+    "startingTimeRequired": "请选择执行时间",
     "beneficiaryWallet": "受益钱包",
     "beneficiaryWalletPlaceholder": "请输入受益钱包地址",
     "percentage": "比例",
+    "percentageTotal": "*受益钱包的比例总和不得超过 100%",
     "formDesc": "新建一份遗产合约，随存随取，开始执行后，自动将剩余资产释放给受益钱包"
   },
   "pension": {

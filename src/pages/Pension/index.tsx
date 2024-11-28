@@ -17,23 +17,6 @@ import MyRecord from '../../components/MyRecord'
 import NumberField from '../../components/NumberField'
 import Title from '../../components/Title'
 
-const tableData = [
-  {
-    id: '1',
-    time: '2021-09-23 12:00:00',
-    type: 'DEPOSIT' as 'DEPOSIT' | 'WITHDRAW',
-    token: 'WBTC',
-    amount: '0.1',
-  },
-  {
-    id: '3',
-    time: '2021-09-23 12:00:00',
-    type: 'DEPOSIT' as 'DEPOSIT' | 'WITHDRAW',
-    token: 'WBTC',
-    amount: '0.1',
-  },
-]
-
 export default function PensionPage() {
   const { isConnected } = useAccount()
 
@@ -67,7 +50,7 @@ export default function PensionPage() {
                   data={null}
                   handleNode={<Button size="small" className="w-[72px]">{t('common.deposit')}</Button>}
                 />
-                <ActivityTable data={tableData} />
+                <ActivityTable assetMode={1} />
               </>
             )
           : <ConnectButton className="mx-auto mt-[120px] flex" />

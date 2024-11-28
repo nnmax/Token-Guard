@@ -1,11 +1,12 @@
 import type { DateValue } from 'react-aria-components'
+import { getLocalTimeZone } from '@internationalized/date'
 import { t } from 'i18next'
 import { useMemo, useState } from 'react'
 import { Button as AriaButton, Form, Heading } from 'react-aria-components'
 import { Controller, useFieldArray, useForm } from 'react-hook-form'
 import { Trans } from 'react-i18next'
-import { useAccount } from 'wagmi'
-
+import { toast } from 'react-toastify'
+import $api from '../../api/fetchClient'
 import ActivityTable from '../../components/ActivityTable'
 import Button from '../../components/Button'
 import ConnectButton from '../../components/ConnectButton'
@@ -18,40 +19,10 @@ import MyRecord from '../../components/MyRecord'
 import NumberField from '../../components/NumberField'
 import TextField from '../../components/TextField'
 import Title from '../../components/Title'
-
-const tableData = [
-  {
-    id: '1',
-    time: '2021-09-23 12:00:00',
-    type: 'DEPOSIT' as 'DEPOSIT' | 'WITHDRAW',
-    token: 'WBTC',
-    amount: '0.1',
-  },
-  {
-    id: '2',
-    time: '2021-09-23 12:00:00',
-    type: 'WITHDRAW' as 'DEPOSIT' | 'WITHDRAW',
-    token: 'WBTC',
-    amount: '0.1',
-  },
-  {
-    id: '3',
-    time: '2021-09-23 12:00:00',
-    type: 'DEPOSIT' as 'DEPOSIT' | 'WITHDRAW',
-    token: 'WBTC',
-    amount: '0.1',
-  },
-  {
-    id: '4',
-    time: '2021-09-23 12:00:00',
-    type: 'WITHDRAW' as 'DEPOSIT' | 'WITHDRAW',
-    token: 'WBTC',
-    amount: '0.1',
-  },
-]
+import { useConnectedAndAuthorized } from '../../store/hooks'
 
 export default function LegacyPage() {
-  const { isConnected } = useAccount()
+  const { data: connectedAndAuthorized } = useConnectedAndAuthorized()
 
   const keynotes = useMemo(() => [
     t('legacy.desc1'),
@@ -70,28 +41,7 @@ export default function LegacyPage() {
         {keynotes}
       </Keynote>
       {
-        isConnected
-          ? (
-              <>
-                <FormModal />
-                <p className="mt-[26px] text-center text-xs/5 font-medium text-[#6E86C2]">
-                  <Trans i18nKey="legacy.createTips" />
-                </p>
-                <MyRecord
-                  title={t('legacy.myLegacy')}
-                  onClickShowDetails={() => {}}
-                  data={null}
-                  handleNode={(
-                    <>
-                      <Button size="small" className="w-[72px]">{t('common.deposit')}</Button>
-                      <Button size="small" variant="outline" className="w-[72px]">{t('common.withdraw')}</Button>
-                    </>
-                  )}
-                />
-                <ActivityTable data={tableData} />
-              </>
-            )
-          : <ConnectButton className="mx-auto mt-[120px] flex" />
+        connectedAndAuthorized ? <MainContent /> : <ConnectButton className="mx-auto mt-[120px] flex" />
       }
     </Layout>
   )
@@ -103,6 +53,7 @@ interface FormValues {
 }
 
 function FormModal() {
+  const labelClasses = 'text-center w-44'
   const [open, setOpen] = useState(false)
   const { control, handleSubmit: _handleSubmit, reset } = useForm<FormValues>({
     defaultValues: {
@@ -111,11 +62,27 @@ function FormModal() {
     },
   })
   const { fields, append, remove } = useFieldArray<FormValues>({ control, name: 'wallets' })
-  const labelClasses = 'text-center w-44'
 
-  const handleSubmit = (formValues: FormValues) => {
-    // eslint-disable-next-line no-console
-    console.log('%c [ formValues ]-76', 'font-size:13px; background:pink; color:#bf2c9f;', formValues)
+  const { mutateAsync, isPending } = $api.useMutation('post', '/create-will')
+
+  const handleSubmit = async (formValues: FormValues) => {
+    if (!formValues.startingTime) {
+      toast.error(t('legacy.startingTimeRequired'))
+      return
+    }
+    if (formValues.wallets.length === 1 && !formValues.wallets[0]!.percentage) {
+      formValues.wallets[0]!.percentage = 100
+    }
+    await mutateAsync({
+      body: {
+        is_insured: false,
+        release_time: formValues.startingTime.toDate(getLocalTimeZone()).valueOf(),
+        beneficiaries: formValues.wallets.map(({ address, percentage }) => ({
+          benAddr: address.startsWith('0x') ? address : `0x${address}`,
+          percent: percentage,
+        })),
+      },
+    })
     reset()
     setOpen(false)
   }
@@ -143,7 +110,6 @@ function FormModal() {
             render={({ field, fieldState }) => (
               <DatePicker
                 label={t('legacy.startingTime')}
-                isRequired
                 validationBehavior="aria"
                 isInvalid={fieldState.invalid}
                 name={field.name}
@@ -192,7 +158,15 @@ function FormModal() {
                 <Controller
                   name={`wallets.${index}.percentage`}
                   control={control}
-                  rules={{ required: true }}
+                  rules={{
+                    required: true,
+                    validate: (_, formValues) => {
+                      if (formValues.wallets.reduce((acc, { percentage }) => acc + percentage, 0) > 100) {
+                        return t('legacy.percentageTotal')
+                      }
+                      return false
+                    },
+                  }}
                   disabled={fields.length === 1}
                   render={({ field: { disabled, ...restField }, fieldState }) => (
                     <NumberField
@@ -205,6 +179,7 @@ function FormModal() {
                       label={t('legacy.percentage')}
                       isDisabled={disabled}
                       endAdditional={<span className="flex size-8 items-center justify-center">%</span>}
+                      errorMessage={index === fields.length - 1 ? fieldState.error?.message : undefined}
                     />
                   )}
                 />
@@ -221,13 +196,84 @@ function FormModal() {
           </Button>
           <div className="mt-6 flex w-full items-center justify-center gap-[88px] text-xs font-medium">
             <Button variant="dashed-outline" onPress={() => setOpen(false)} className="w-[168px]">{t('common.cancel')}</Button>
-            <Button type="submit" className="w-[168px]">{t('common.confirm')}</Button>
+            <Button isPending={isPending} type="submit" className="w-[168px]">{t('common.confirm')}</Button>
           </div>
           <p className="mt-4 text-center text-xs font-medium text-[#6E86C2]">
             {t('legacy.formDesc')}
           </p>
         </Form>
       </Modal>
+    </>
+  )
+}
+
+function MainContent() {
+  const { data: willData } = $api.useQuery('get', '/get-will', undefined, {
+    initialData: {
+      code: 0,
+      isInsured: Date.now() % 2 === 0,
+      releaseTime: Date.now(),
+      totalValueUSD: 123456,
+      lastPremiumTime: Date.now(),
+      assets: [
+        {
+          token: 'WBTC',
+          amount: 123.321,
+        },
+        {
+          token: 'WETH',
+          amount: 123.321,
+        },
+        {
+          token: 'USDT',
+          amount: 123.321,
+        },
+        {
+          token: 'USDC',
+          amount: 123.321,
+        },
+      ],
+      beneficiaries: [
+        {
+          benAddr: '0x1234567890sadf',
+          percent: 50,
+        },
+        {
+          benAddr: '0x123456789032',
+          percent: 50,
+        },
+      ],
+    },
+  })
+
+  return (
+    <>
+      <FormModal />
+      <p className="mt-[26px] text-center text-xs/5 font-medium text-[#6E86C2]">
+        <Trans i18nKey="legacy.createTips" />
+      </p>
+      <MyRecord
+        title={t('legacy.myLegacy')}
+        onClickShowDetails={() => {}}
+        data={willData && willData.assets
+          ? willData.assets.reduce(
+            (acc, { token, amount }) => {
+              acc[token.toLowerCase()] = amount
+              return acc
+            },
+            {
+              value: willData.totalValueUSD,
+            } as Record<string, number>,
+          )
+          : null}
+        handleNode={(
+          <>
+            <Button size="small" className="w-[72px]">{t('common.deposit')}</Button>
+            <Button size="small" variant="outline" className="w-[72px]">{t('common.withdraw')}</Button>
+          </>
+        )}
+      />
+      <ActivityTable assetMode={0} />
     </>
   )
 }

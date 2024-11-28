@@ -2,6 +2,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { I18nProvider, RouterProvider as ReactAriaRouterProvider } from 'react-aria-components'
 import { useTranslation } from 'react-i18next'
 import { useHref, useNavigate } from 'react-router-dom'
+import { Bounce, ToastContainer } from 'react-toastify'
 import { WagmiProvider } from 'wagmi'
 import wagmiConfig from '../wagmiConfig'
 
@@ -23,6 +24,7 @@ export default function Providers({ children }: { children?: React.ReactNode }) 
         <WagmiProvider config={wagmiConfig}>
           <QueryClientProvider client={queryClient}>
             {children}
+            <ToastContainer draggable transition={Bounce} autoClose={3000} />
           </QueryClientProvider>
         </WagmiProvider>
       </ReactAriaRouterProvider>

@@ -18,37 +18,6 @@ import NumberField from '../../components/NumberField'
 import TextField from '../../components/TextField'
 import Title from '../../components/Title'
 
-const tableData = [
-  {
-    id: '1',
-    time: '2021-09-23 12:00:00',
-    type: 'DEPOSIT' as 'DEPOSIT' | 'WITHDRAW',
-    token: 'WBTC',
-    amount: '0.1',
-  },
-  {
-    id: '2',
-    time: '2021-09-23 12:00:00',
-    type: 'WITHDRAW' as 'DEPOSIT' | 'WITHDRAW',
-    token: 'WBTC',
-    amount: '0.1',
-  },
-  {
-    id: '3',
-    time: '2021-09-23 12:00:00',
-    type: 'DEPOSIT' as 'DEPOSIT' | 'WITHDRAW',
-    token: 'WBTC',
-    amount: '0.1',
-  },
-  {
-    id: '4',
-    time: '2021-09-23 12:00:00',
-    type: 'WITHDRAW' as 'DEPOSIT' | 'WITHDRAW',
-    token: 'WBTC',
-    amount: '0.1',
-  },
-]
-
 export default function TrustPage() {
   const { isConnected } = useAccount()
 
@@ -87,7 +56,7 @@ export default function TrustPage() {
                     </>
                   )}
                 />
-                <ActivityTable data={tableData} />
+                <ActivityTable assetMode={2} />
               </>
             )
           : <ConnectButton className="mx-auto mt-[120px] flex" />
