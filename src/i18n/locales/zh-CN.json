@@ -20,7 +20,8 @@
     "depositSuccessful": "存入成功",
     "depositFailure": "存入失败",
     "withdrawSuccessful": "提取成功",
-    "withdrawFailure": "提取失败"
+    "withdrawFailure": "提取失败",
+    "createFailure": "创建失败"
   },
   "home": {
     "legacy": "遗 产",

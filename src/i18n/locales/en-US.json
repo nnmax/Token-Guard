@@ -20,7 +20,8 @@
     "depositSuccessful": "Deposit Successful",
     "depositFailure": "Deposit Failure",
     "withdrawSuccessful": "Withdraw Successful",
-    "withdrawFailure": "Withdraw Failure"
+    "withdrawFailure": "Withdraw Failure",
+    "createFailure": "Create Failure"
   },
   "home": {
     "legacy": "Legacy",

@@ -11,43 +11,7 @@ import MyRecord from '../MyRecord'
 import FormModal from './FormModal'
 
 export default function MainContent() {
-  const { data: willData } = $api.useQuery('get', '/get-will', undefined, {
-    initialData: {
-      code: 0,
-      isInsured: Date.now() % 2 === 0,
-      releaseTime: Date.now(),
-      totalValueUSD: 123456,
-      lastPremiumTime: Date.now(),
-      assets: [
-        {
-          token: 'WBTC',
-          amount: 123.321,
-        },
-        {
-          token: 'WETH',
-          amount: 123.321,
-        },
-        {
-          token: 'USDT',
-          amount: 123.321,
-        },
-        {
-          token: 'USDC',
-          amount: 123.321,
-        },
-      ],
-      beneficiaries: [
-        {
-          benAddr: '0x1234567890sadf',
-          percent: 50,
-        },
-        {
-          benAddr: '0x123456789032',
-          percent: 50,
-        },
-      ],
-    },
-  })
+  const { data: willData } = $api.useQuery('get', '/get-will')
   const { mutateAsync: depositWill, isPending: depositing } = $api.useMutation('post', '/deposit-will')
   const { mutateAsync: withdrawWill, isPending: withdrawing } = $api.useMutation('post', '/withdraw-will')
   const [depositModalOpen, setDepositModalOpen] = useState(false)

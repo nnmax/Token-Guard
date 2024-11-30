@@ -1,10 +1,12 @@
 import type { DateValue } from 'react-aria-components'
+import type { Hex } from 'viem'
 import { getLocalTimeZone } from '@internationalized/date'
 import { t } from 'i18next'
 import { useState } from 'react'
 import { Button as AriaButton, Form, Heading } from 'react-aria-components'
 import { Controller, useFieldArray, useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
+import { useSendTransaction } from 'wagmi'
 import $api from '../../api/fetchClient'
 import Button from '../Button'
 import DatePicker from '../DatePicker'
@@ -20,6 +22,7 @@ interface FormValues {
 export default function FormModal() {
   const labelClasses = 'text-center w-44'
   const [open, setOpen] = useState(false)
+  const { sendTransactionAsync } = useSendTransaction()
   const { control, handleSubmit: _handleSubmit, reset } = useForm<FormValues>({
     defaultValues: {
       startingTime: null,
@@ -27,8 +30,7 @@ export default function FormModal() {
     },
   })
   const { fields, append, remove } = useFieldArray<FormValues>({ control, name: 'wallets' })
-
-  const { mutateAsync, isPending } = $api.useMutation('post', '/create-will')
+  const { mutateAsync: createWill, isPending: creating } = $api.useMutation('post', '/create-will')
 
   const handleSubmit = async (formValues: FormValues) => {
     if (!formValues.startingTime) {
@@ -38,7 +40,7 @@ export default function FormModal() {
     if (formValues.wallets.length === 1 && !formValues.wallets[0]!.percentage) {
       formValues.wallets[0]!.percentage = 100
     }
-    await mutateAsync({
+    const calldata = await createWill({
       body: {
         is_insured: false,
         release_time: formValues.startingTime.toDate(getLocalTimeZone()).valueOf(),
@@ -47,6 +49,18 @@ export default function FormModal() {
           percent: percentage,
         })),
       },
+    }).then((res) => {
+      if (res && res.calldata) {
+        return res.calldata as Hex
+      }
+      throw new Error('No calldata')
+    }).catch((error) => {
+      console.error(error)
+      toast.error(t('common.createFailure'))
+      throw error
+    })
+    await sendTransactionAsync({
+      data: calldata,
     })
     reset()
     setOpen(false)
@@ -161,7 +175,7 @@ export default function FormModal() {
           </Button>
           <div className="mt-6 flex w-full items-center justify-center gap-[88px] text-xs font-medium">
             <Button variant="dashed-outline" onPress={() => setOpen(false)} className="w-[168px]">{t('common.cancel')}</Button>
-            <Button isPending={isPending} type="submit" className="w-[168px]">{t('common.confirm')}</Button>
+            <Button isPending={creating} type="submit" className="w-[168px]">{t('common.confirm')}</Button>
           </div>
           <p className="mt-4 text-center text-xs font-medium text-[#6E86C2]">
             {t('legacy.formDesc')}

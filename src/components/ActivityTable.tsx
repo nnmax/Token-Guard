@@ -15,17 +15,6 @@ export default function ActivityTable(props: {
         asset_mode: assetMode,
       },
     },
-  }, {
-    initialData: {
-      code: 0,
-      total: 4,
-      operations: Array.from({ length: 4 }, (_, i) => ({
-        amount: 123.321,
-        operation_type: i % 2 === 0 ? 'DEPOSIT' : 'WITHDRAW',
-        timestamp: Date.now() - i * 1000,
-        token: 'WBTC',
-      })),
-    },
   })
 
   return (
