@@ -3,6 +3,7 @@ import { getLocalTimeZone } from '@internationalized/date'
 import { t } from 'i18next'
 import { useMemo, useState } from 'react'
 import { Button as AriaButton, Form, Heading } from 'react-aria-components'
+import { flushSync } from 'react-dom'
 import { Controller, useFieldArray, useForm } from 'react-hook-form'
 import { Trans } from 'react-i18next'
 import { toast } from 'react-toastify'
@@ -12,7 +13,7 @@ import Button from '../../components/Button'
 import ConnectButton from '../../components/ConnectButton'
 import ConnectedMenu from '../../components/ConnectedMenu'
 import DatePicker from '../../components/DatePicker'
-import DepositModal, { type FormValues as DepositModalFormValues } from '../../components/DepositModal'
+import DepositAndWithdrawModal, { type FormValues as DepositModalFormValues } from '../../components/DepositAndWithdrawModal'
 import Keynote from '../../components/Keynote'
 import Layout from '../../components/Layout'
 import Modal from '../../components/Modal'
@@ -247,16 +248,20 @@ function MainContent() {
     },
   })
   const { mutateAsync: depositWill, isPending: depositing } = $api.useMutation('post', '/deposit-will')
+  const { mutateAsync: withdrawWill, isPending: withdrawing } = $api.useMutation('post', '/withdraw-will')
   const [depositModalOpen, setDepositModalOpen] = useState(false)
+  const [modalType, setModalType] = useState<'deposit' | 'withdraw'>('deposit')
 
-  const handleDeposit = async (values: DepositModalFormValues) => {
-    await depositWill({
-      body: values,
-    }).then(() => {
-      toast.success(t('common.depositSuccessful'))
+  const handleSubmit = async (values: DepositModalFormValues) => {
+    const api = modalType === 'deposit' ? depositWill : withdrawWill
+    const successfulMessage = modalType === 'deposit' ? t('common.depositSuccessful') : t('common.withdrawSuccessful')
+    const failureMessage = modalType === 'deposit' ? t('common.depositFailure') : t('common.withdrawFailure')
+
+    await api({ body: values }).then(() => {
+      toast.success(successfulMessage)
     }).catch((error) => {
       console.error(error)
-      toast.error(t('common.depositFailure'))
+      toast.error(failureMessage)
     })
   }
 
@@ -282,12 +287,42 @@ function MainContent() {
           : null}
         handleNode={(
           <>
-            <Button size="small" className="w-[72px]" onPress={() => setDepositModalOpen(true)}>{t('common.deposit')}</Button>
-            <Button size="small" variant="outline" className="w-[72px]">{t('common.withdraw')}</Button>
+            <Button
+              size="small"
+              className="w-[72px]"
+              onPress={() => {
+                flushSync(() => {
+                  setModalType('deposit')
+                })
+                setDepositModalOpen(true)
+              }}
+            >
+              {t('common.deposit')}
+            </Button>
+            <Button
+              size="small"
+              variant="outline"
+              className="w-[72px]"
+              onPress={() => {
+                flushSync(() => {
+                  setModalType('withdraw')
+                })
+                setDepositModalOpen(true)
+              }}
+            >
+              {t('common.withdraw')}
+
+            </Button>
           </>
         )}
       />
-      <DepositModal isOpen={depositModalOpen} onClose={() => setDepositModalOpen(false)} handleDeposit={handleDeposit} depositing={depositing} />
+      <DepositAndWithdrawModal
+        type={modalType}
+        isOpen={depositModalOpen}
+        onClose={() => setDepositModalOpen(false)}
+        onSubmit={handleSubmit}
+        submitting={modalType === 'deposit' ? depositing : withdrawing}
+      />
       <ActivityTable assetMode={0} />
     </>
   )

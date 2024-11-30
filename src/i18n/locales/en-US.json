@@ -18,7 +18,9 @@
     "max": "MAX",
     "available": "AVAILABLE",
     "depositSuccessful": "Deposit Successful",
-    "depositFailure": "Deposit Failure"
+    "depositFailure": "Deposit Failure",
+    "withdrawSuccessful": "Withdraw Successful",
+    "withdrawFailure": "Withdraw Failure"
   },
   "home": {
     "legacy": "Legacy",

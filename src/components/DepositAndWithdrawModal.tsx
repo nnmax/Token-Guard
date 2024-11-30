@@ -9,9 +9,10 @@ import WETHImage from '../assets/images/weth.png'
 import Button from './Button'
 import Modal from './Modal'
 
-interface DepositModalProps extends Omit<ModalProps, 'children'> {
-  handleDeposit: (values: FormValues) => Promise<void>
-  depositing: boolean
+interface DepositAndWithdrawModalProps extends Omit<ModalProps, 'children'> {
+  onSubmit: (values: FormValues) => Promise<void>
+  submitting: boolean
+  type: 'deposit' | 'withdraw'
 }
 
 const radioClassName = clsx('flex h-[88px] w-[112px] cursor-pointer flex-col items-center justify-center rounded-[5px] border border-dashed border-[#A4A4A4] text-sm font-medium text-black transition-colors data-[selected]:border-0 data-[selected]:bg-[#3255AC] data-[selected]:text-white [&>[data-token]]:text-[36px]')
@@ -28,9 +29,11 @@ export interface FormValues {
   amount: number
 }
 
-export default function DepositModal(props: DepositModalProps) {
-  const { isOpen, onClose, handleDeposit, depositing } = props
+export default function DepositAndWithdrawModal(props: DepositAndWithdrawModalProps) {
+  const { isOpen, onClose, onSubmit: handleDeposit, submitting: depositing, type } = props
   const titleId = useId()
+  const title = type === 'deposit' ? t('common.deposit') : t('common.withdraw')
+  const amountLabel = type === 'deposit' ? t('common.depositAmount') : t('common.withdrawAmount')
   const { control, watch, setValue, handleSubmit: _handleSubmit, reset } = useForm<FormValues>({
     defaultValues: {
       token: Token.WBTC,
@@ -55,7 +58,7 @@ export default function DepositModal(props: DepositModalProps) {
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} className="max-w-[576px] rounded-[20px] " padding="24px 52px 40px" contentClassName="flex flex-col">
-      <Heading id={titleId} slot="title" className="text-2xl/10 font-bold uppercase text-[#6E86C2]">{t('common.deposit')}</Heading>
+      <Heading id={titleId} slot="title" className="text-2xl/10 font-bold uppercase text-[#6E86C2]">{title}</Heading>
       <Form className="flex flex-col" onSubmit={handleSubmit}>
         <Controller
           control={control}
@@ -111,7 +114,7 @@ export default function DepositModal(props: DepositModalProps) {
                 name={field.name}
                 isDisabled={field.disabled}
               >
-                <Label className="text-sm/6 font-semibold text-[#525A70]">{t('common.depositAmount')}</Label>
+                <Label className="text-sm/6 font-semibold text-[#525A70]">{amountLabel}</Label>
                 <Input ref={field.ref} className="h-16 rounded-[5px] border border-black/10 py-4 pl-6 pr-[92px] text-2xl/10 font-semibold text-[#3255AC]" />
               </NumberField>
             )}
