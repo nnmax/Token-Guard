@@ -1,15 +1,24 @@
 import optimizeLocales from '@react-aria/optimize-locales-plugin'
-import react from '@vitejs/plugin-react-swc'
+import react from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react(), {
-    ...optimizeLocales.vite({
-      locales: ['en-US', 'zh-CN'],
+  plugins: [
+    react({
+      babel: {
+        plugins: [
+          ['babel-plugin-react-compiler', {}],
+        ],
+      },
     }),
-    enforce: 'pre',
-  }],
+    {
+      ...optimizeLocales.vite({
+        locales: ['en-US', 'zh-CN'],
+      }),
+      enforce: 'pre',
+    },
+  ],
   server: {
     host: '0.0.0.0',
     proxy: {
