@@ -39,16 +39,16 @@ export default function MainContent() {
       <MyRecord
         title={t('legacy.myLegacy')}
         onClickShowDetails={() => {}}
-        data={willData && willData.assets
+        data={willData && Array.isArray(willData.assets)
           ? willData.assets.reduce(
-            (acc, { token, amount }) => {
-              acc[token.toLowerCase()] = amount
-              return acc
-            },
-            {
-              value: willData.totalValueUSD,
-            } as Record<string, number>,
-          )
+              (acc, { token, amount }) => {
+                acc[token.toLowerCase()] = amount
+                return acc
+              },
+              {
+                value: willData.totalValueUSD,
+              } as Record<string, number>,
+            )
           : null}
         handleNode={(
           <>

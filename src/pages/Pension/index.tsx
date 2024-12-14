@@ -1,6 +1,6 @@
 import type { DateValue } from 'react-aria-components'
 import { t } from 'i18next'
-import { useMemo, useState } from 'react'
+import { useState } from 'react'
 import { Form, Heading } from 'react-aria-components'
 import { Controller, useForm } from 'react-hook-form'
 import { Trans } from 'react-i18next'
@@ -20,14 +20,14 @@ import Title from '../../components/Title'
 export default function PensionPage() {
   const { isConnected } = useAccount()
 
-  const keynotes = useMemo(() => [
+  const keynotes = [
     t('pension.desc1'),
     t('pension.desc2'),
     t('pension.desc3'),
     t('pension.desc4'),
     t('pension.desc5'),
     t('pension.desc6'),
-  ], [])
+  ]
 
   return (
     <Layout>
@@ -96,7 +96,7 @@ function FormModal() {
         <Heading slot="title" className="sr-only">{t('pension.create')}</Heading>
         <Form
           className="flex flex-col gap-5"
-          onSubmit={_handleSubmit(handleSubmit)}
+          onSubmit={(event) => { _handleSubmit(handleSubmit)(event).catch(console.error) }}
         >
           <Controller
             control={control}

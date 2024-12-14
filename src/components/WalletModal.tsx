@@ -20,7 +20,8 @@ export default function WalletModal() {
   const { mutateAsync: connectWalletApi } = $api.useMutation('post', '/connect-wallet')
 
   useEffect(() => {
-    setConnectedAndAuthorized(isConnected && !!localStorage.getItem(AUTHORIZATION_KEY))
+    const authorization = localStorage.getItem(AUTHORIZATION_KEY)
+    setConnectedAndAuthorized(isConnected && authorization !== null && authorization !== '')
   }, [isConnected, setConnectedAndAuthorized])
 
   const tryActivation = async (connector: Connector) => {
@@ -43,7 +44,7 @@ export default function WalletModal() {
         throw error
       })
 
-      if (!accounts) {
+      if (accounts.length === 0) {
         toast.error('Failed to connect wallet')
         return
       }
@@ -52,7 +53,7 @@ export default function WalletModal() {
       const m = window.localStorage.getItem(MESSAGE_KEY)
 
       let connectWalletResponse: false | components['schemas']['ConnectWalletResponse'] = false
-      if (m && s) {
+      if (m !== null && !m && s !== null && !s) {
         connectWalletResponse = await connectWalletApi({
           body: {
             address: accounts[0],
@@ -80,14 +81,14 @@ export default function WalletModal() {
       }
 
       let authorization = connectWalletResponse.authorization
-      if (accounts && typeof connectWalletResponse.message_to_sign === 'string') {
+      if (accounts.length > 0 && typeof connectWalletResponse.message_to_sign === 'string') {
         const signature = await signMessageAsync({
           message: connectWalletResponse.message_to_sign,
           account: accounts[0],
         })
         const connectWalletResponse2 = await connectWalletApi({
           body: {
-            address: accounts![0],
+            address: accounts[0],
             signature,
             message: connectWalletResponse.message_to_sign,
           },
@@ -97,7 +98,7 @@ export default function WalletModal() {
         window.localStorage.setItem(MESSAGE_KEY, connectWalletResponse.message_to_sign)
       }
 
-      if (authorization) {
+      if (authorization !== null && authorization !== '') {
         window.localStorage.setItem(AUTHORIZATION_KEY, authorization)
       }
       else {
@@ -127,7 +128,7 @@ export default function WalletModal() {
             loading={connector === pendingWallet}
             disabled={!!pendingWallet}
             onClick={() => {
-              tryActivation(connector)
+              tryActivation(connector).catch(console.error)
             }}
           />
         )
@@ -218,7 +219,7 @@ function getInjectedConnectors(connectors: readonly Connector[]) {
 
   // Special-case: Return deprecated window.ethereum connector when no eip6963 injectors are present.
   const fallbackInjector = getConnectorWithId(connectors, CONNECTION.INJECTED_CONNECTOR_ID, { shouldThrow: true })
-  if (!injectedConnectors.length && Boolean(window.ethereum)) {
+  if (!injectedConnectors.length && window.ethereum && fallbackInjector) {
     return { injectedConnectors: [fallbackInjector] }
   }
 
@@ -231,7 +232,7 @@ function getConnectorWithId(
   connectors: readonly Connector[],
   id: ConnectorID,
   options: { shouldThrow: true },
-): Connector
+): Connector | undefined
 function getConnectorWithId(connectors: readonly Connector[], id: ConnectorID): Connector | undefined
 function getConnectorWithId(
   connectors: readonly Connector[],

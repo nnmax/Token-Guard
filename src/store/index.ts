@@ -14,7 +14,7 @@ export function createGlobalState<T>(
 
     const { data } = useQuery({
       queryKey: [queryKey],
-      queryFn: () => Promise.resolve(initialData),
+      queryFn: async () => Promise.resolve(initialData),
       initialData,
       refetchInterval: false,
       refetchOnMount: false,
@@ -30,10 +30,10 @@ export function createGlobalState<T>(
     const resetData = useCallback(() => {
       queryClient.invalidateQueries({
         queryKey: [queryKey],
-      })
+      }).catch(console.error)
       queryClient.refetchQueries({
         queryKey: [queryKey],
-      })
+      }).catch(console.error)
     }, [queryClient])
 
     return useMemo(() => ({ data, setData, resetData }), [data, resetData, setData])

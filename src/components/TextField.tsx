@@ -36,7 +36,7 @@ const TextField = forwardRef<HTMLInputElement, TextFieldProps>((
             className="h-8 rounded-[5px] bg-[#E8E8E8] px-2 data-[invalid]:border data-[invalid]:border-[#FA5151]"
             placeholder={placeholder}
           />
-          {description && <Text slot="description">{description}</Text>}
+          {typeof description === 'string' && description !== '' && <Text slot="description">{description}</Text>}
         </div>
       </AriaTextField>
       {endAdditional}

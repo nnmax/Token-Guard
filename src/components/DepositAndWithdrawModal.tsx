@@ -59,7 +59,12 @@ export default function DepositAndWithdrawModal(props: DepositAndWithdrawModalPr
   return (
     <Modal isOpen={isOpen} onClose={onClose} className="max-w-[576px] rounded-[20px] " padding="24px 52px 40px" contentClassName="flex flex-col">
       <Heading id={titleId} slot="title" className="text-2xl/10 font-bold uppercase text-[#6E86C2]">{title}</Heading>
-      <Form className="flex flex-col" onSubmit={handleSubmit}>
+      <Form
+        className="flex flex-col"
+        onSubmit={(event) => {
+          handleSubmit(event).catch(console.error)
+        }}
+      >
         <Controller
           control={control}
           name="token"

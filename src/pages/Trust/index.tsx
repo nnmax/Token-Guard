@@ -1,6 +1,6 @@
 import type { DateValue } from 'react-aria-components'
 import { t } from 'i18next'
-import { useMemo, useState } from 'react'
+import { useState } from 'react'
 import { Button as AriaButton, Form, Heading } from 'react-aria-components'
 import { Controller, useFieldArray, useForm } from 'react-hook-form'
 import { Trans } from 'react-i18next'
@@ -21,14 +21,14 @@ import Title from '../../components/Title'
 export default function TrustPage() {
   const { isConnected } = useAccount()
 
-  const keynotes = useMemo(() => [
+  const keynotes = [
     t('trust.desc1'),
     t('trust.desc2'),
     t('trust.desc3'),
     t('trust.desc4'),
     t('trust.desc5'),
     t('trust.desc6'),
-  ], [])
+  ]
 
   return (
     <Layout>
@@ -103,7 +103,9 @@ function FormModal() {
         <Heading slot="title" className="sr-only">{t('trust.create')}</Heading>
         <Form
           className="flex flex-col gap-5"
-          onSubmit={_handleSubmit(handleSubmit)}
+          onSubmit={(event) => {
+            _handleSubmit(handleSubmit)(event).catch(console.error)
+          }}
         >
           <Controller
             control={control}

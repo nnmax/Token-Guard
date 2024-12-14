@@ -50,7 +50,7 @@ export default function DatePicker(props: DatePickerProps) {
               <span className="icon-[lsicon--down-filled]"></span>
             </Button>
           </Group>
-          {description && (
+          {!!description && (
             <Text slot="description" className="text-xs/5 font-medium text-black/30">{description}</Text>
           )}
         </div>

@@ -17,7 +17,7 @@ function getDefaultLanguage() {
   let defaultLanguage = 'en-US'
   if (typeof window !== 'undefined') {
     const lang = new URLSearchParams(window.location.search).get('lang')
-    if (lang && lang.startsWith('zh')) {
+    if (typeof lang === 'string' && lang.startsWith('zh')) {
       defaultLanguage = 'zh-CN'
     }
   }

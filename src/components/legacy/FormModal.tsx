@@ -50,7 +50,7 @@ export default function FormModal() {
         })),
       },
     }).then((res) => {
-      if (res && res.calldata) {
+      if (res.calldata) {
         return res.calldata as Hex
       }
       throw new Error('No calldata')
@@ -81,7 +81,9 @@ export default function FormModal() {
         <Heading slot="title" className="sr-only">{t('legacy.create')}</Heading>
         <Form
           className="flex flex-col gap-5"
-          onSubmit={_handleSubmit(handleSubmit)}
+          onSubmit={(event) => {
+            _handleSubmit(handleSubmit)(event).catch(console.error)
+          }}
         >
           <Controller
             control={control}

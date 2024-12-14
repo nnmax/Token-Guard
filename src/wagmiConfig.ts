@@ -6,7 +6,7 @@ import coinbaseWalletIcon from './assets/images/coinbaseWalletIcon.svg'
 import metamaskIcon from './assets/images/metamask-icon.svg'
 import walletConnectIcon from './assets/images/walletConnectIcon.svg'
 
-const coinbaseWalletWithIcon = () => {
+function coinbaseWalletWithIcon() {
   return createConnector<any>((config) => {
     const coinbaseWalletReturn = coinbaseWallet({
       // TODO: 配置 favicon
@@ -21,7 +21,7 @@ const coinbaseWalletWithIcon = () => {
   })
 }
 
-const walletConnectWithIcon = () => {
+function walletConnectWithIcon() {
   return createConnector<any>((config) => {
     const walletConnectReturn = walletConnect({
       // TODO: 配置域名, https://cloud.reown.com/
@@ -48,7 +48,7 @@ function injectedWithFallback() {
 
     return {
       ...injectedConnector,
-      connect(...params) {
+      async connect(...params) {
         if (!window.ethereum) {
           window.open('https://metamask.io/', 'inst_metamask')
         }

@@ -1,5 +1,4 @@
 import { t } from 'i18next'
-import { useMemo } from 'react'
 import ConnectButton from '../../components/ConnectButton'
 import ConnectedMenu from '../../components/ConnectedMenu'
 import Keynote from '../../components/Keynote'
@@ -11,14 +10,14 @@ import { useConnectedAndAuthorized } from '../../store/hooks'
 export default function LegacyPage() {
   const { data: connectedAndAuthorized } = useConnectedAndAuthorized()
 
-  const keynotes = useMemo(() => [
+  const keynotes = [
     t('legacy.desc1'),
     t('legacy.desc2'),
     t('legacy.desc3'),
     t('legacy.desc4'),
     t('legacy.desc5'),
     t('legacy.desc6'),
-  ], [])
+  ]
 
   return (
     <Layout>

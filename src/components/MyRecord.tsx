@@ -42,7 +42,7 @@ export default function MyRecord(props: {
       <dl className="mt-7 flex items-center justify-between border-b border-[#6E86C2]/40 pb-[18px] text-center font-medium text-[#1A1A1A] [&_dd]:text-sm/6 [&_dt]:text-xs/6">
         <div className={legacyBoxItemClasses}>
           <dt>VALUE</dt>
-          <dd>{data?.value ? `$ ${data.value}` : '-'}</dd>
+          <dd>{typeof data?.value === 'number' ? `$ ${data.value}` : '-'}</dd>
         </div>
         <div className={legacyBoxItemClasses}>
           <dt>WBTC</dt>
