@@ -49,8 +49,7 @@ jobs:
           # Build a docker container and
           # push it to ECR so that it can
           # be deployed to ECS.
-          docker pull $ECR_REGISTRY/$ECR_REPOSITORY:latest
-          docker build --cache-from $ECR_REGISTRY/$ECR_REPOSITORY:latest \
+          docker build \
             --build-arg PROXY_PASS \
             --build-arg SERVER_NAME \
             -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG \
