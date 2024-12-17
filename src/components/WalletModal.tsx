@@ -137,7 +137,7 @@ export default function WalletModal() {
   )
 }
 
-export function WalletModalWrapper(props: { open: boolean, onClose: () => void, children: React.ReactNode }) {
+function WalletModalWrapper(props: { open: boolean, onClose: () => void, children: React.ReactNode }) {
   const { open, onClose, children } = props
 
   return (

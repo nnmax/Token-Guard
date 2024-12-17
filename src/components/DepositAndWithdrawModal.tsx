@@ -3,7 +3,7 @@ import clsx from 'clsx'
 import { t } from 'i18next'
 import { useId } from 'react'
 import { Form, Heading, Input, Label, NumberField, Radio, RadioGroup } from 'react-aria-components'
-import { Controller, useForm } from 'react-hook-form'
+import { Controller, useForm, useWatch } from 'react-hook-form'
 import $api from '../api/fetchClient'
 import WETHImage from '../assets/images/weth.png'
 import Button from './Button'
@@ -29,22 +29,20 @@ export interface FormValues {
   amount: number
 }
 
+const DEFAULT_VALUES = {
+  token: Token.WBTC,
+  amount: 0,
+}
+
 export default function DepositAndWithdrawModal(props: DepositAndWithdrawModalProps) {
   const { isOpen, onClose, onSubmit: handleDeposit, submitting: depositing, type } = props
   const titleId = useId()
   const title = type === 'deposit' ? t('common.deposit') : t('common.withdraw')
   const amountLabel = type === 'deposit' ? t('common.depositAmount') : t('common.withdrawAmount')
-  const { control, watch, setValue, handleSubmit: _handleSubmit, reset } = useForm<FormValues>({
-    defaultValues: {
-      token: Token.WBTC,
-      amount: 0,
-    },
-  })
-
-  const [token, amount] = watch(['token', 'amount'])
-
-  const { data: balance, isLoading: balanceIsLoading } = $api.useQuery('get', '/get-balance', { params: { query: { token } } }, { enabled: isOpen })
-  const maxValue = balance?.balance ?? 0
+  const { control, setValue, handleSubmit: _handleSubmit, reset } = useForm<FormValues>({ defaultValues: DEFAULT_VALUES })
+  const { amount, token } = useWatch({ control, defaultValue: DEFAULT_VALUES })
+  const { data: balance, isLoading: balanceIsLoading } = $api.useQuery('get', '/get-balance', { params: { query: { token: token! } } }, { enabled: isOpen && !!token })
+  const maxValue = balance?.balance ?? 10
 
   const handleMax = () => {
     setValue('amount', maxValue)
@@ -108,6 +106,7 @@ export default function DepositAndWithdrawModal(props: DepositAndWithdrawModalPr
             }}
             render={({ field, fieldState }) => (
               <NumberField
+                formatOptions={{ maximumFractionDigits: maxValue.toString().split('.')[1]?.length }}
                 isRequired
                 minValue={0}
                 maxValue={maxValue}

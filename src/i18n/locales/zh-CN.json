@@ -10,6 +10,7 @@
     "confirm": "确 定",
     "financing": "生 息",
     "insure": "投 保",
+    "endInsure": "结束投保",
     "deposit": "存 入",
     "withdraw": "提 取",
     "addAnotherWallet": "添加下一个钱包",
@@ -21,7 +22,12 @@
     "depositFailure": "存入失败",
     "withdrawSuccessful": "提取成功",
     "withdrawFailure": "提取失败",
-    "createFailure": "创建失败"
+    "createFailure": "创建失败",
+    "createSuccessful": "创建成功",
+    "updateFailure": "更新失败",
+    "updateSuccessful": "更新成功",
+    "startingTimeRequired": "请选择执行时间",
+    "edit": "编 辑"
   },
   "home": {
     "legacy": "遗 产",
@@ -40,12 +46,12 @@
     "myLegacy": "我的遗产",
     "activity": "记录",
     "startingTime": "执行时间",
-    "startingTimeRequired": "请选择执行时间",
     "beneficiaryWallet": "受益钱包",
     "beneficiaryWalletPlaceholder": "请输入受益钱包地址",
     "percentage": "比例",
     "percentageTotal": "*受益钱包的比例总和不得超过 100%",
-    "formDesc": "新建一份遗产合约，随存随取，开始执行后，自动将剩余资产释放给受益钱包"
+    "formDesc": "新建一份遗产合约，随存随取，开始执行后，自动将剩余资产释放给受益钱包",
+    "totalValue": "遗产总额"
   },
   "pension": {
     "desc1": "智能合约保障",
@@ -62,7 +68,8 @@
     "monthsOfPaymentPlaceholder": "请输入分多少个月领取",
     "monthsOfPaymentDesc": "* 以上设定开始运行后不可更改",
     "formDesc": "新建一份社保，定期往里存钱，开始执行后，定期领钱",
-    "myPension": "已存社保"
+    "myPension": "已存社保",
+    "totalValue": "社保总额"
   },
   "trust": {
     "desc1": "智能合约保障",
@@ -78,6 +85,7 @@
     "beneficiaryWalletPlaceholder": "请输入受益钱包地址",
     "percentage": "每月领取比例",
     "formDesc": "新建一份信托，随存随取，开始执行后，每月自动按提前设置好的受益比例，将剩余资产释放给受益钱包",
-    "myTrust": "我的信托资产"
+    "myTrust": "我的信托资产",
+    "totalValue": "信托总额"
   }
 }

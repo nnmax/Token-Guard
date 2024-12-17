@@ -1,12 +1,13 @@
+import type { PRODUCT_TYPE } from '../constants'
 import clsx from 'clsx'
 import { t } from 'i18next'
 import { Cell, Column, Row, Table, TableBody, TableHeader } from 'react-aria-components'
 import $api from '../api/fetchClient'
 
 export default function ActivityTable(props: {
-  assetMode: 0 | 1 | 2
+  productType: PRODUCT_TYPE
 }) {
-  const { assetMode } = props
+  const { productType: assetMode } = props
   const thClasses = 'text-xs/6 font-semibold text-[#1A1A1A]/70'
 
   const { data: operations, isLoading } = $api.useQuery('get', '/get-asset-operations', {

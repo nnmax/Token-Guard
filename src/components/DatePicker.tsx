@@ -14,7 +14,7 @@ interface DatePickerProps extends AriaDatePickerProps<DateValue> {
 const now = today(getLocalTimeZone())
 
 export default function DatePicker(props: DatePickerProps) {
-  const { labelClasses, endAdditional, label, description, className, value, defaultValue, ...restProps } = props
+  const { labelClasses, endAdditional, label, description, className, value, defaultValue, isReadOnly, ...restProps } = props
 
   const hasValue = !!value || !!defaultValue
 
@@ -25,6 +25,7 @@ export default function DatePicker(props: DatePickerProps) {
         isDateUnavailable={date => date.compare(now) < 0}
         value={value}
         defaultValue={defaultValue}
+        isReadOnly={isReadOnly}
         {...restProps}
         className={state => twMerge('group flex w-full gap-2', typeof className === 'function' ? className(state) : className)}
       >
@@ -37,7 +38,7 @@ export default function DatePicker(props: DatePickerProps) {
           {label}
         </Label>
         <div className="flex-1">
-          <Group className="flex rounded-[5px] bg-[#E8E8E8] group-open:bg-white">
+          <Group className={twMerge('flex rounded-[5px] bg-[#E8E8E8] group-open:bg-white', isReadOnly && 'bg-transparent')}>
             <DateInput className={clsx('flex flex-1 px-2 py-1', !hasValue && 'text-black/30')}>
               {segment => (
                 <DateSegment
@@ -46,9 +47,11 @@ export default function DatePicker(props: DatePickerProps) {
                 />
               )}
             </DateInput>
-            <Button className="flex items-center rounded-r-lg border-0 border-l border-solid border-l-purple-200 bg-transparent px-3 text-gray-700 outline-none ring-black transition focus-visible:ring-2 data-[pressed]:bg-purple-100">
-              <span className="icon-[lsicon--down-filled]"></span>
-            </Button>
+            {!isReadOnly && (
+              <Button className="flex items-center rounded-r-lg border-0 border-l border-solid border-l-purple-200 bg-transparent px-3 text-gray-700 outline-none ring-black transition focus-visible:ring-2 data-[pressed]:bg-purple-100">
+                <span className="icon-[lsicon--down-filled]" />
+              </Button>
+            )}
           </Group>
           {!!description && (
             <Text slot="description" className="text-xs/5 font-medium text-black/30">{description}</Text>

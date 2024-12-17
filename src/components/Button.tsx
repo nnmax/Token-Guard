@@ -2,7 +2,7 @@ import clsx from 'clsx'
 import { Button as AriaButton, type ButtonProps as AriaButtonProps } from 'react-aria-components'
 import { twMerge } from 'tailwind-merge'
 
-interface ButtonProps extends Omit<AriaButtonProps, 'className'> {
+export interface ButtonProps extends Omit<AriaButtonProps, 'className'> {
   className?: string
   /**
    * The size of the button.

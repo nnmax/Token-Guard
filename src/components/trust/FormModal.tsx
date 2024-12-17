@@ -1,9 +1,7 @@
-import type { DateValue } from 'react-aria-components'
 import type { Hex } from 'viem'
 import { getLocalTimeZone } from '@internationalized/date'
 import { t } from 'i18next'
-import { isEqual, isNil } from 'lodash-es'
-import { Button as AriaButton, Form, Heading } from 'react-aria-components'
+import { Button as AriaButton, type DateValue, Form, Heading } from 'react-aria-components'
 import { Controller, useFieldArray, useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 import { useSendTransaction } from 'wagmi'
@@ -38,73 +36,11 @@ export default function FormModal(props: FormModalProps) {
   const { open, setOpen, defaultValues = DEFAULT_VALUES, readonly, totalValue, setReadonly } = props
   const labelClasses = 'text-center w-44'
   const { sendTransactionAsync, isPending: sendingTransaction } = useSendTransaction()
-  const { control, handleSubmit: _handleSubmit, reset } = useForm<FormValues>({ defaultValues })
+  const { control, handleSubmit: _handleSubmit, reset } = useForm<FormValues>({
+    defaultValues,
+  })
   const { fields, append, remove } = useFieldArray<FormValues>({ control, name: 'wallets' })
-  const { mutateAsync: createWill, isPending: creating } = $api.useMutation('post', '/create-will')
-  const { mutateAsync: updateReleaseTime, isPending: updatingReleaseTime } = $api.useMutation('post', '/set-will-release-time')
-  const { mutateAsync: updateBeneficiary, isPending: updatingBeneficiary } = $api.useMutation('post', '/set-will-beneficiary')
-  const submitting = creating || updatingReleaseTime || updatingBeneficiary || sendingTransaction
-
-  const handleCreate = async (formValues: FormValues) => {
-    try {
-      const { calldata } = await createWill({
-        body: {
-          is_insured: false,
-          // @ts-expect-error API accepts the is_financed parameter
-          is_financed: false,
-          release_time: formValues.startingTime!.toDate(getLocalTimeZone()).valueOf(),
-          beneficiaries: formValues.wallets.map(({ address, percentage }) => ({
-            benAddr: address.startsWith('0x') ? address : `0x${address}`,
-            percent: percentage,
-          })),
-        },
-      })
-      await sendTransactionAsync({
-        data: calldata as Hex,
-        to: CONTRACT_ADDRESS,
-      })
-      toast.success(t('common.createSuccessful'))
-    }
-    catch (error) {
-      toast.error(t('common.createFailure'))
-      throw error
-    }
-  }
-
-  const handleUpdate = async (formValues: FormValues) => {
-    try {
-      if (defaultValues.startingTime && formValues.startingTime?.compare(defaultValues.startingTime) !== 0) {
-        const { calldata } = await updateReleaseTime({
-          body: {
-            release_time: formValues.startingTime!.toDate(getLocalTimeZone()).valueOf(),
-          },
-        })
-        await sendTransactionAsync({
-          data: calldata as Hex,
-          to: CONTRACT_ADDRESS,
-        })
-      }
-      if (!isEqual(defaultValues.wallets, formValues.wallets)) {
-        const { calldata } = await updateBeneficiary({
-          body: {
-            beneficiaries: formValues.wallets.map(({ address, percentage }) => ({
-              benAddr: address.startsWith('0x') ? address : `0x${address}`,
-              percent: percentage,
-            })),
-          },
-        })
-        await sendTransactionAsync({
-          data: calldata as Hex,
-          to: CONTRACT_ADDRESS,
-        })
-      }
-      toast.success(t('common.updateSuccessful'))
-    }
-    catch (error) {
-      toast.error(t('common.updateFailure'))
-      throw error
-    }
-  }
+  const { mutateAsync: createTrust, isPending: creating } = $api.useMutation('post', '/create-trust')
 
   const handleSubmit = async (formValues: FormValues) => {
     if (!formValues.startingTime) {
@@ -114,12 +50,31 @@ export default function FormModal(props: FormModalProps) {
     if (formValues.wallets.length === 1 && !formValues.wallets[0]!.percentage) {
       formValues.wallets[0]!.percentage = 100
     }
-    if (readonly === undefined) {
-      await handleCreate(formValues)
-    }
-    else {
-      await handleUpdate(formValues)
-    }
+    const calldata = await createTrust({
+      body: {
+        is_insured: false,
+        release_time: formValues.startingTime.toDate(getLocalTimeZone()).valueOf(),
+        release_percent: 0,
+        beneficiaries: formValues.wallets.map(({ address, percentage }) => ({
+          benAddr: address.startsWith('0x') ? address : `0x${address}`,
+          percent: percentage,
+        })),
+      },
+    }).then((res) => {
+      if (res.calldata) {
+        return res.calldata as Hex
+      }
+      throw new Error('No calldata')
+    }).catch((error) => {
+      console.error(error)
+      toast.error(t('common.createFailure'))
+      throw error
+    })
+    await sendTransactionAsync({
+      data: calldata,
+      to: CONTRACT_ADDRESS,
+    })
+    toast.success(t('common.createSuccessful'))
     reset()
     setOpen(false)
   }
@@ -130,17 +85,17 @@ export default function FormModal(props: FormModalProps) {
       onClose={() => setOpen(false)}
       className="px-14 pb-6 pt-14"
     >
-      <Heading slot="title" className="sr-only">{t('legacy.create')}</Heading>
+      <Heading slot="title" className="sr-only">{t('trust.create')}</Heading>
       <Form
         className="flex flex-col gap-5"
         onSubmit={(event) => {
           _handleSubmit(handleSubmit)(event).catch(console.error)
         }}
       >
-        {!isNil(totalValue) && (
+        {(totalValue !== null || totalValue !== undefined) && (
           <TextField
             labelClasses={labelClasses}
-            label={t('legacy.totalValue')}
+            label={t('trust.totalValue')}
             isReadOnly
             value={`$ ${totalValue ?? 0}`}
           />
@@ -150,7 +105,8 @@ export default function FormModal(props: FormModalProps) {
           name="startingTime"
           render={({ field, fieldState }) => (
             <DatePicker
-              label={t('legacy.startingTime')}
+              label={t('trust.startingTime')}
+              isRequired
               validationBehavior="aria"
               isInvalid={fieldState.invalid}
               name={field.name}
@@ -181,8 +137,8 @@ export default function FormModal(props: FormModalProps) {
                     labelClasses={labelClasses}
                     isDisabled={disabled}
                     autoComplete="off"
-                    label={`${t('legacy.beneficiaryWallet')}${fields.length > 1 ? ` (${index + 1})` : ''}`}
-                    placeholder={t('legacy.beneficiaryWalletPlaceholder')}
+                    label={`${t('trust.beneficiaryWallet')}${fields.length > 1 ? ` (${index + 1})` : ''}`}
+                    placeholder={t('trust.beneficiaryWalletPlaceholder')}
                     isReadOnly={readonly}
                     endAdditional={index === 0
                       ? <span className="size-8" />
@@ -201,15 +157,7 @@ export default function FormModal(props: FormModalProps) {
               <Controller
                 name={`wallets.${index}.percentage`}
                 control={control}
-                rules={{
-                  required: true,
-                  validate: (_, formValues) => {
-                    if (formValues.wallets.reduce((acc, { percentage }) => acc + percentage, 0) > 100) {
-                      return t('legacy.percentageTotal')
-                    }
-                    return false
-                  },
-                }}
+                rules={{ required: true }}
                 disabled={fields.length === 1}
                 render={({ field: { disabled, ...restField }, fieldState }) => (
                   <NumberField
@@ -219,10 +167,9 @@ export default function FormModal(props: FormModalProps) {
                     isInvalid={fieldState.invalid}
                     labelClasses={labelClasses}
                     className="mt-7"
-                    label={t('legacy.percentage')}
+                    label={t('trust.percentage')}
                     isDisabled={disabled}
                     endAdditional={<span className="flex size-8 items-center justify-center">%</span>}
-                    errorMessage={index === fields.length - 1 ? fieldState.error?.message : undefined}
                     isReadOnly={readonly}
                   />
                 )}
@@ -234,8 +181,15 @@ export default function FormModal(props: FormModalProps) {
           readonly
             ? (
                 <div className="mt-6 flex w-full items-center justify-center gap-[88px] text-xs font-medium">
-                  <Button variant="dashed-outline" onPress={() => setReadonly?.(false)} className="w-[168px]">
+                  <Button
+                    variant="dashed-outline"
+                    onPress={() => {
+                      setReadonly?.(false)
+                    }}
+                    className="w-[168px]"
+                  >
                     {t('common.edit')}
+
                   </Button>
                 </div>
               )
@@ -251,11 +205,11 @@ export default function FormModal(props: FormModalProps) {
                   </Button>
                   <div className="mt-6 flex w-full items-center justify-center gap-[88px] text-xs font-medium">
                     <Button variant="dashed-outline" onPress={() => setOpen(false)} className="w-[168px]">{t('common.cancel')}</Button>
-                    <Button isPending={submitting} type="submit" className="w-[168px]">{t('common.confirm')}</Button>
+                    <Button isPending={creating || sendingTransaction} type="submit" className="w-[168px]">{t('common.confirm')}</Button>
                   </div>
                   {(totalValue === null || totalValue === undefined) && (
                     <p className="mt-4 text-center text-xs font-medium text-[#6E86C2]">
-                      {t('legacy.formDesc')}
+                      {t('trust.formDesc')}
                     </p>
                   )}
                 </>

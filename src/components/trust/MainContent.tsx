@@ -15,14 +15,36 @@ import MyRecord from '../MyRecord'
 import FormModal from './FormModal'
 
 export default function MainContent() {
-  const { data: willData } = $api.useQuery('get', '/get-will')
+  const { data: trustData } = $api.useQuery('get', '/get-trust', undefined, {
+    select() {
+      const fakeData = {
+        assets: [
+          { token: 'wbtc', amount: 100 },
+          { token: 'weth', amount: 10 },
+          { token: 'usdt', amount: 10 },
+          { token: 'usdc', amount: 10 },
+        ],
+        totalValueUSD: 130,
+        isInsured: true,
+        ReleaseTime: Date.now(),
+        lastPremiumTime: Date.now(),
+        releasePercent: 10,
+        code: 100,
+        beneficiaries: [{
+          benAddr: '0x1234567890123456789012345678901234567890',
+          percent: 100,
+        }],
+      }
+      return fakeData
+    },
+  })
+  const { mutateAsync: depositWill, isPending: depositing } = $api.useMutation('post', '/deposit-trust')
+  const { mutateAsync: withdrawWill, isPending: withdrawing } = $api.useMutation('post', '/withdraw-trust')
+  const [depositModalOpen, setDepositModalOpen] = useState(false)
   const [createModalOpen, setCreateModalOpen] = useState(false)
   const [viewModalOpen, setViewModalOpen] = useState(false)
-  const { mutateAsync: depositWill, isPending: depositing } = $api.useMutation('post', '/deposit-will')
-  const { mutateAsync: withdrawWill, isPending: withdrawing } = $api.useMutation('post', '/withdraw-will')
-  const [depositModalOpen, setDepositModalOpen] = useState(false)
-  const [modalType, setModalType] = useState<'deposit' | 'withdraw'>('deposit')
   const [readonly, setReadonly] = useState(true)
+  const [modalType, setModalType] = useState<'deposit' | 'withdraw'>('deposit')
   const { sendTransactionAsync: approve, isPending: approving } = useSendTransaction()
   const { sendTransactionAsync: transfer, isPending: transfering } = useSendTransaction()
 
@@ -65,16 +87,14 @@ export default function MainContent() {
     toast.success(successfulMessage)
   }
 
-  const { mutate } = $api.useMutation('post', '/withdraw-will-all')
-
-  const data = willData && Array.isArray(willData.assets)
-    ? willData.assets.reduce(
+  const data = trustData && Array.isArray(trustData.assets)
+    ? trustData.assets.reduce(
         (acc, { token, amount }) => {
           acc[token.toLowerCase()] = amount
           return acc
         },
         {
-          value: willData.totalValueUSD,
+          value: trustData.totalValueUSD,
         } as Record<string, number>,
       )
     : null
@@ -82,47 +102,40 @@ export default function MainContent() {
   return (
     <>
       {
-        willData
-          ? willData.releaseTime
-            ? null
-            : (
-                <>
-                  <Button className="mx-auto mt-[120px] w-[248px]" onPress={() => setCreateModalOpen(true)}>
-                    <span className="icon-[ic--baseline-plus] text-base"></span>
-                    <span>{t('legacy.create')}</span>
-                  </Button>
-                  <FormModal open={createModalOpen} setOpen={setCreateModalOpen} />
-                </>
-              )
-          : null
+        (!trustData?.beneficiaries || !trustData.beneficiaries.length) && (
+          <>
+            <Button className="mx-auto mt-[120px] w-[248px]" onPress={() => setCreateModalOpen(true)}>
+              <span className="icon-[ic--baseline-plus] text-base"></span>
+              <span>{t('trust.create')}</span>
+            </Button>
+            <FormModal open={createModalOpen} setOpen={setCreateModalOpen} />
+          </>
+        )
       }
-      {!!willData?.releaseTime && (
-        <FormModal
-          open={viewModalOpen}
-          setOpen={setViewModalOpen}
-          readonly={readonly}
-          totalValue={willData.totalValueUSD}
-          setReadonly={setReadonly}
-          defaultValues={{
-            startingTime: willData?.releaseTime ? toCalendarDate(fromAbsolute(willData.releaseTime, getLocalTimeZone())) : null,
-            wallets: willData?.beneficiaries.map(({ benAddr, percent }) => ({
-              address: benAddr,
-              percentage: percent,
-            })) ?? [],
-          }}
-        />
-      )}
+      {
+        (!!trustData?.ReleaseTime) && (
+          <FormModal
+            open={viewModalOpen}
+            setOpen={setViewModalOpen}
+            readonly={readonly}
+            totalValue={trustData.totalValueUSD}
+            setReadonly={setReadonly}
+            defaultValues={{
+              startingTime: trustData?.ReleaseTime ? toCalendarDate(fromAbsolute(trustData.ReleaseTime, getLocalTimeZone())) : null,
+              wallets: trustData?.beneficiaries.map(({ benAddr, percent }) => ({
+                address: benAddr,
+                percentage: percent,
+              })) ?? [],
+            }}
+          />
+        )
+      }
       <p className="mt-[26px] text-center text-xs/5 font-medium text-[#6E86C2]">
-        <Trans i18nKey="legacy.createTips" />
+        <Trans i18nKey="trust.createTips" />
       </p>
       <MyRecord
-        title={t('legacy.myLegacy')}
-        onClickShowDetails={() => {
-          if (willData?.releaseTime) {
-            setReadonly(true)
-            setViewModalOpen(true)
-          }
-        }}
+        title={t('trust.myTrust')}
+        onClickShowDetails={() => {}}
         data={data}
         depositButtonProps={{
           onPress: () => {
@@ -140,8 +153,8 @@ export default function MainContent() {
             setDepositModalOpen(true)
           },
         }}
-        isInsured={willData?.isInsured}
-        productType={PRODUCT_TYPE.WILL}
+        isInsured={trustData?.isInsured}
+        productType={PRODUCT_TYPE.TRUST}
       />
       <DepositAndWithdrawModal
         type={modalType}
@@ -150,14 +163,7 @@ export default function MainContent() {
         onSubmit={handleSubmit}
         submitting={(modalType === 'deposit' ? depositing : withdrawing) || approving || transfering}
       />
-      <ActivityTable productType={PRODUCT_TYPE.WILL} />
-      <Button onPress={() => {
-        mutate({})
-      }}
-      >
-        Withdraw All
-
-      </Button>
+      <ActivityTable productType={PRODUCT_TYPE.TRUST} />
     </>
   )
 }

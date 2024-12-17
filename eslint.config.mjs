@@ -13,6 +13,11 @@ export default antfu(
     },
     lessOpinionated: false,
     ignores: ['dist', '.yarn', '.eslintcache', 'node_modules', 'public', 'yarn.lock'],
+    stylistic: {
+      overrides: {
+        'antfu/if-newline': 'off',
+      },
+    },
   },
   reactConfig({
     files: ['**/*.tsx'],
