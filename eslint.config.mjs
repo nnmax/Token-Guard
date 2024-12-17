@@ -12,7 +12,7 @@ export default antfu(
       tsconfigPath: './tsconfig.json',
     },
     lessOpinionated: false,
-    ignores: ['dist', '.yarn', '.eslintcache', 'node_modules', 'public', 'yarn.lock'],
+    ignores: ['dist', '.yarn', '.eslintcache', 'node_modules', 'public', 'yarn.lock', 'tsconfig.app.tsbuildinfo', 'tsconfig.node.json', '.dockerignore', 'Dockerfile', 'nginx.config.template'],
     stylistic: {
       overrides: {
         'antfu/if-newline': 'off',

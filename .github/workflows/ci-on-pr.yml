@@ -1,0 +1,45 @@
+name: CI on Pull Request
+
+on:
+  push:
+    branches: [main]
+
+  pull_request:
+    branches: [main]
+
+  workflow_dispatch:
+
+env:
+  HUSKY: 0
+  YARN_ENABLE_GLOBAL_CACHE: false
+  YARN_ENABLE_MIRROR: false
+  YARN_NM_MODE: hardlinks-local
+
+jobs:
+  check_ci:
+    name: Check CI
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          cache: yarn
+
+      - name: Install dependencies
+        run: yarn install --immutable
+
+      - name: Build
+        run: yarn build
+
+      - name: Typecheck
+        run: yarn tsc
+
+      - name: Lint
+        run: yarn lint

@@ -10,7 +10,8 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "tsc": "tsc -b",
+    "build": "vite build",
     "lint": "eslint . --cache",
     "lint:fix": "yarn eslint --fix",
     "preview": "vite preview",
@@ -67,6 +68,6 @@
     "pre-commit": "yarn lint-staged"
   },
   "lint-staged": {
-    "*": "eslint --cache --fix --max-warnings 10"
+    "*": "eslint --cache --fix --no-warn-ignored --max-warnings 0"
   }
 }

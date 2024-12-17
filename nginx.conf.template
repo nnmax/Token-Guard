@@ -1,0 +1,24 @@
+server {
+  listen 8080;
+  server_name $SERVER_NAME;
+  root /usr/share/nginx/html;
+  index index.html;
+
+  location ^~ /api/ {
+    resolver 169.254.169.253;
+    set $backend $PROXY_PASS;
+    proxy_pass $backend;
+    proxy_redirect off;
+    proxy_set_header X-Real-IP  $remote_addr;
+    proxy_set_header X-Forwarded-For  $proxy_add_x_forwarded_for;
+    proxy_set_header X-Nginx-Proxy true;
+  }
+
+  location = /favicon.svg {
+    root /usr/share/nginx/html;
+  }
+
+  location / {
+    try_files $uri $uri/ /index.html;
+  }
+}
