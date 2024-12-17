@@ -6,7 +6,7 @@ import { toast } from 'react-toastify'
 import { ConnectorAlreadyConnectedError, useAccount, useChainId, useConnect, useSignMessage } from 'wagmi'
 import $api from '../api/fetchClient'
 import { AUTHORIZATION_KEY, MESSAGE_KEY, SIGNATURE_KEY } from '../constants'
-import { useConnectedAndAuthorized, useWalletModalOpen } from '../store/hooks'
+import { useConnectedAndAuthorized, useWalletModalOpen } from '../globalState'
 import Modal from './Modal'
 
 export default function WalletModal() {

@@ -5,7 +5,7 @@ import Keynote from '../../components/Keynote'
 import Layout from '../../components/Layout'
 import MainContent from '../../components/pension/MainContent'
 import Title from '../../components/Title'
-import { useConnectedAndAuthorized } from '../../store/hooks'
+import { useConnectedAndAuthorized } from '../../globalState'
 
 export default function PensionPage() {
   const { data: connectedAndAuthorized } = useConnectedAndAuthorized()

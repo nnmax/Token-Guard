@@ -2,7 +2,7 @@ import type { ButtonProps } from 'react-aria-components'
 import { t } from 'i18next'
 import { Button } from 'react-aria-components'
 import { twMerge } from 'tailwind-merge'
-import { useWalletModalOpen } from '../store/hooks'
+import { useWalletModalOpen } from '../globalState'
 
 export default function ConnectButton(props: Omit<ButtonProps, 'className'> & {
   className?: string

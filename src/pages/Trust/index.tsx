@@ -5,7 +5,7 @@ import Keynote from '../../components/Keynote'
 import Layout from '../../components/Layout'
 import Title from '../../components/Title'
 import MainContent from '../../components/trust/MainContent'
-import { useConnectedAndAuthorized } from '../../store/hooks'
+import { useConnectedAndAuthorized } from '../../globalState'
 
 export default function TrustPage() {
   const { data: connectedAndAuthorized } = useConnectedAndAuthorized()

@@ -5,7 +5,7 @@ import Keynote from '../../components/Keynote'
 import Layout from '../../components/Layout'
 import MainContent from '../../components/legacy/MainContent'
 import Title from '../../components/Title'
-import { useConnectedAndAuthorized } from '../../store/hooks'
+import { useConnectedAndAuthorized } from '../../globalState'
 
 export default function LegacyPage() {
   const { data: connectedAndAuthorized } = useConnectedAndAuthorized()

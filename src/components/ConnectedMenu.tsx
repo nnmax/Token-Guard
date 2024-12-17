@@ -3,7 +3,7 @@ import { Button, Menu, MenuItem, MenuTrigger, Popover } from 'react-aria-compone
 import { useAccount, useDisconnect } from 'wagmi'
 import DisconnectSvg from '../assets/images/disconnect.svg'
 import { AUTHORIZATION_KEY } from '../constants'
-import { useConnectedAndAuthorized } from '../store/hooks'
+import { useConnectedAndAuthorized } from '../globalState'
 
 export default function ConnectedMenu() {
   const { disconnect } = useDisconnect()
