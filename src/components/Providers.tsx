@@ -20,6 +20,7 @@ export default function Providers({ children }: { children?: React.ReactNode }) 
 
   return (
     <I18nProvider locale={language}>
+      {/* eslint-disable-next-line ts/no-misused-promises, react-compiler/react-compiler */}
       <ReactAriaRouterProvider navigate={navigate} useHref={useHref}>
         <WagmiProvider config={wagmiConfig}>
           <QueryClientProvider client={queryClient}>
