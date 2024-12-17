@@ -8,13 +8,13 @@
 
 # env:
 #   AWS_REGION: us-west-2
-#   ECR_REPOSITORY: packex-web
-#   ECS_SERVICE: packex-web
+#   ECR_REPOSITORY: tokenguard-web
+#   ECS_SERVICE: tokenguard-web
 #   ECS_CLUSTER: flip-god
 #   ECS_TASK_DEFINITION: .aws/ecs/task-definition.json
 #   CONTAINER_NAME: app
-#   PROXY_PASS: http://packex-backend.prod.local:8089
-#   SERVER_NAME: packex.io
+#   PROXY_PASS: http://tokenguard-backend.prod.local:8089
+#   SERVER_NAME: tokenguard.tech
 
 # jobs:
 #   deploy:
