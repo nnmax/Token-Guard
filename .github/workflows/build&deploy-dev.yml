@@ -14,7 +14,7 @@ env:
   ECS_CLUSTER: flipgod-dev
   ECS_TASK_DEFINITION: .aws/ecs/dev/task-definition.json
   CONTAINER_NAME: app
-  PROXY_PASS: https://api-dev.tokenguard.tech
+  PROXY_PASS: https://xpmzgpess2hxh6hjvfxqatpkwu0nqnyv.lambda-url.us-west-2.on.aws
   SERVER_NAME: web-dev.tokenguard.tech
 
 jobs:
